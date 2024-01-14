@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Spotify, MusicNoteBeamed } from "react-bootstrap-icons";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 id="title">
+        Generate posters of your top artists/tracks/albums here!
+      </h1>
+      <div className="buttons">
+        <button id="spotify">
+          <Spotify className="logo"></Spotify>
+          Login with Spotify!
+        </button>
+        <button id="apple-music">
+          <MusicNoteBeamed className="logo"></MusicNoteBeamed>
+          Login with Apple Music!
+        </button>
+      </div>
     </div>
   );
 }
