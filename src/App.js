@@ -1,22 +1,21 @@
 import "./App.css";
-import { Spotify, MusicNoteBeamed } from "react-bootstrap-icons";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Components/Home";
+import Landing from "./Components/Landing";
+import NavBar from "./Components/NavBar";
 
 function App() {
   return (
     <div className="App">
-      <h1 id="title">
-        Generate posters of your top artists/tracks/albums here!
-      </h1>
-      <div className="buttons">
-        <button id="spotify">
-          <Spotify className="logo"></Spotify>
-          Login with Spotify!
-        </button>
-        <button id="apple-music">
-          <MusicNoteBeamed className="logo"></MusicNoteBeamed>
-          Login with Apple Music!
-        </button>
-      </div>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
