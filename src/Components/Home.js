@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
-import { all } from "axios";
 
 function Home() {
   const [token, setToken] = useState(null);
@@ -11,14 +10,11 @@ function Home() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    if (!storedToken) {
+      navigate("/");
+    }
     setToken(storedToken);
-  }, []);
-
-  const logout = () => {
-    setToken("");
-    window.localStorage.removeItem("token");
-    navigate("/");
-  };
+  }, [navigate]);
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -79,24 +75,14 @@ function Home() {
       function addAnimation() {
         carousels.forEach((scroller) => {
           scroller.setAttribute("data-animated", true);
-
-          const scrollerInner = scroller.querySelectorAll(".image-carousel");
-          const scrollerContent = Array.from(scrollerInner).flatMap((carousel) =>
-            Array.from(carousel.children)
-          );
-
-          scrollerContent.forEach((item) => {
-            const duplicatedItem = item.cloneNode(true);
-            duplicatedItem.setAttribute("aria-hidden", true);
-            scrollerInner.appendChild(duplicatedItem);
-          });
         });
       }
     }
-  }, []);
+  }, [artists, tracks]);
 
   return (
-    <div className="Home">
+    <div className="home">
+      <h1>Music Posters</h1>
       {artists && (
         <div className="carousel-container" data-direction="left" data-speed="slow">
           <div className="image-carousel" id="top-carousel">
@@ -127,8 +113,6 @@ function Home() {
           </div>
         </div>
       )}
-      <h1>Music Posters</h1>
-      <button onClick={logout}>Logout</button>
     </div>
   );
 }

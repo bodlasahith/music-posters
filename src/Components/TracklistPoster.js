@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
 
-function AIPoster() {
+function TracklistPoster() {
   const [token, setToken] = useState(null);
   const navigate = useNavigate();
 
@@ -15,11 +15,11 @@ function AIPoster() {
   }, [navigate]);
 
   return (
-    <div className="ai-poster">
-      <h1>AI Poster Generator</h1>
+    <div className="poster">
+      <h1>Tracklist Poster</h1>
       <p>This feature is currently under development. Please check back later.</p>
     </div>
   );
 }
 
-export default AIPoster;
+export default TracklistPoster;

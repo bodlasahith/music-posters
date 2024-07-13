@@ -17,8 +17,6 @@ function App() {
   ];
 
   const [token, setToken] = useState("");
-  const [artists, setArtists] = useState([]);
-  const [tracks, setTracks] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,11 +50,23 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Music Posters</h1>
-        {!token ? <button onClick={login}>Login to Spotify</button> : null}
-      </header>
+    <div className="landing">
+      <h1>Music Posters</h1>
+      {!token ? (
+        <button
+          style={{
+            backgroundColor: "#1DB954",
+            color: "white",
+            padding: "15px 30px",
+            border: "none",
+            borderRadius: "30px",
+            cursor: "pointer",
+            fontFamily: "inherit",
+          }}
+          onClick={login}>
+          Login to Spotify
+        </button>
+      ) : null}
     </div>
   );
 }
