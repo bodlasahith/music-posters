@@ -116,41 +116,52 @@ body {
 
 .compilation-poster {
   display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background: lightgoldenrodyellow;
+}
+
+.compilation-poster-left {
+  display: flex;
   flex-direction: column;
   align-items: left;
   height: 100%;
-  width: 100%;
+  width: 50%;
+  margin-right: 2rem;
   background: lightskyblue;
 }
-.compilation-poster h1 {
+.compilation-poster-left h1 {
   margin-top: 10rem;
   margin-left: 2rem;
+  margin-right: 2rem;
 }
 
-.compilation-poster form {
+.compilation-poster-left form {
   height: 55%;
-  width: 50%;
   margin-left: 2rem;
+  margin-right: 2rem;
   overflow-y: scroll;
   background: white;
   border-radius: 10px;
+  border: 5px solid skyblue;
 }
 
-.compilation-poster form::-webkit-scrollbar {
+.compilation-poster-left form::-webkit-scrollbar {
   width: 10px;
 }
 
-.compilation-poster form::-webkit-scrollbar-track {
+.compilation-poster-left form::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 5px;
 }
 
-.compilation-poster form::-webkit-scrollbar-thumb {
+.compilation-poster-left form::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 }
 
-.compilation-poster form::-webkit-scrollbar-thumb:hover {
+.compilation-poster-left form::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
@@ -191,15 +202,217 @@ body {
   cursor: pointer;
 }
 
-.compilation-poster button {
+.compilation-poster-left button {
   background-color: #1DB954;
   color: white;
   padding: 15px 30px;
   margin-left: 2rem;
+  margin-right: 2rem;
   margin-top: 2rem;
-  width: 50%;
   border: none;
   border-radius: 30px;
   cursor: pointer;
   font-family: inherit;
+}
+
+.compilation-poster-left button:hover {
+  background-color: #149d46;
+}
+
+/* Tracklist Poster */
+
+.tracklist-poster {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background: lightgoldenrodyellow;
+}
+
+.tracklist-poster-left {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  height: 100%;
+  width: 50%;
+  background: lightskyblue;
+}
+
+.tracklist-poster-left h1 {
+  margin-top: 10rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.tracklist-poster-left input {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.search-and-refresh {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.tracklist-poster-left button {
+  background-color: #1DB954;
+  color: white;
+  padding: 15px 30px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.tracklist-poster-left button:hover {
+  background-color: #149d46;
+}
+
+.poster-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  background: white;
+  border-radius: 10px;
+}
+
+.poster-results::-webkit-scrollbar {
+  width: 10px;
+}
+
+.poster-results::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.poster-results::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.poster-results::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.poster-result {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+}
+
+.poster-result img {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+.poster-result:hover {
+  background: lightgreen;
+}
+
+.tracklist-poster-right {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  height: 100%;
+  width: 50%;
+  background: lightgoldenrodyellow;
+}
+
+.tracklist-poster-right h1 {
+  margin-top: 10rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.poster-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  height: 100%;
+  background: white;
+  border-radius: 10px;
+  border: 2px dashed lightgray;
+  padding: 1rem;
+}
+
+.poster-content {
+  height: 410px;
+  width: 300px;
+  border: 5px double black;
+  background: floralwhite;
+  padding: 35px;
+}
+
+.poster-content img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 300px;
+}
+
+.tracklist {
+  display: flex;
+  flex-direction: row;
+}
+
+.tracks {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: 5px;
+  font-family: Open Sans, Verdana, Geneva, Tahoma, sans-serif;
+  width: 185px;
+  height: 110px;
+  overflow-y: hidden;
+  padding-left: 10px;
+  line-height: normal;
+}
+
+.tracks li {
+  text-overflow: ellipsis;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 115px;
+  text-align: right;
+  line-height: 1;
+  text-overflow: ellipsis;
+}
+
+.title h6 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Open Sans, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.title p {
+  margin-top: 0.2rem;
+  font-size: 10px;
+  font-family: Open Sans, Verdana, Geneva, Tahoma, sans-serif;
 }

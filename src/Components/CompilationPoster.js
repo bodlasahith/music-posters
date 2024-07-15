@@ -26,12 +26,12 @@ function CompilationPoster() {
       options: ["Albums", "Tracks", "Artists"],
     },
     {
-      id: 3,
+      id: 2,
       questionText: "Time range of music?",
       options: ["Short-term (4 weeks)", "Medium-term (6 months)", "Long-term (12 months)"],
     },
     {
-      id: 4,
+      id: 3,
       questionText: "Dimensions for poster?",
       options: [
         "8.5in x 11in (215.9mm X 279.4mm)",
@@ -70,35 +70,39 @@ function CompilationPoster() {
     }
 
     if (timeRange === "Short-term (4 weeks)") {
-      endpoint += "time_range=short_term&limit=50";
+      endpoint += "time_range=short_term&limit=" + selectedNumber;
     } else if (timeRange === "Medium-term (6 months)") {
-      endpoint += "time_range=medium_term&limit=50";
+      endpoint += "time_range=medium_term&limit=" + selectedNumber;
     } else {
-      endpoint += "time_range=long_term&limit=50";
+      endpoint += "time_range=long_term&limit=" + selectedNumber;
     }
 
     fetchItems(endpoint);
   };
 
   const fetchItems = async (endpoint) => {
-    const response = await fetch(endpoint, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    const type = answers[1];
-    if (type === "Artists") {
-      setArtists(data.items);
-    } else {
-      setAlbums(data.items.filter((item) => item.album.album_type !== "SINGLE"));
-      setTracks(data.items.filter((item) => item.album.album_type === "SINGLE"));
+    try {
+      const response = await fetch(endpoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+  
+      const type = answers[1];
+      if (type === "Artists") {
+        setArtists(data.items);
+      } else {
+        setAlbums(data.items.filter((item) => item.album.album_type !== "SINGLE"));
+        setTracks(data.items.filter((item) => item.album.album_type === "SINGLE"));
+      }
+    } catch (error) {
+      console.error("Error during Spotify API request:", error);
     }
   };
 
@@ -108,38 +112,42 @@ function CompilationPoster() {
 
   return (
     <div className="compilation-poster">
-      <h1>Compilation Poster Generator</h1>
-      <form className="question-container">
-        {collageQuestions.map((question) => (
-          <div key={question.id}>
-            <h3>{question.questionText}</h3>
-            {question.options.map((option) => (
-              <label key={option}>
-                <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  value={option}
-                  checked={answers[question.id] === option}
-                  onChange={() => handleOptionChange(question.id, option)}
-                />
-                {option}
-              </label>
-            ))}
+      <div className="compilation-poster-left">
+        <h1>Compilation Poster Generator</h1>
+        <form className="question-container">
+          {collageQuestions.map((question) => (
+            <div key={question.id}>
+              <h3>
+                {question.id}. {question.questionText}
+              </h3>
+              {question.options.map((option) => (
+                <label key={option}>
+                  <input
+                    type="radio"
+                    name={`question-${question.id}`}
+                    value={option}
+                    checked={answers[question.id] === option}
+                    onChange={() => handleOptionChange(question.id, option)}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
+          ))}
+          <div>
+            <h3>4. Number of items to display: {selectedNumber}</h3>
+            <input
+              type="range"
+              id="number-selection"
+              min="1"
+              max="50"
+              value={selectedNumber}
+              onChange={handleSliderChange}
+            />
           </div>
-        ))}
-        <div>
-          <h3>Number of items to display: {selectedNumber}</h3>
-          <input
-            type="range"
-            id="number-selection"
-            min="1"
-            max="50"
-            value={selectedNumber}
-            onChange={handleSliderChange}
-          />
-        </div>
-      </form>
-      <button onClick={handleSubmit}>Submit</button>
+        </form>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
     </div>
   );
 }
