@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Components.css";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import ColorThief from "colorthief";
 
 function TracklistPoster() {
   const [token, setToken] = useState(null);
@@ -13,7 +14,11 @@ function TracklistPoster() {
   const [tracks, setTracks] = useState([]);
   const [albumCover, setAlbumCover] = useState(null);
   const [albumName, setAlbumName] = useState("");
-  const [artist, setArtist] = useState("");
+  const [albumDate, setAlbumDate] = useState("");
+  const [label, setLabel] = useState("");
+  const [duration, setDuration] = useState(0);
+  const [albumColors, setAlbumColors] = useState([]);
+  const [artists, setArtists] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,7 +63,18 @@ function TracklistPoster() {
       setAlbumCover(data.images[0].url);
       setAlbumName(data.name);
       setTracks(data.tracks.items);
-      setArtist(data.artists[0].name);
+      setArtists(data.artists.map((artist) => artist.name).join(", "));
+      setAlbumDate(data.release_date);
+      setLabel(data.label);
+
+      let totalDuration = 0;
+      data.tracks.items.forEach((track) => {
+        totalDuration += track.duration_ms;
+      });
+
+      let minutes = Math.floor(totalDuration / 60000);
+      let seconds = ((totalDuration % 60000) / 1000).toFixed(0);
+      setDuration(`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`);
 
       setShowPoster(true);
       setOverflowAdjusted(false);
@@ -82,6 +98,7 @@ function TracklistPoster() {
     if (originalOl.scrollHeight > originalOlHeight) {
       let newOl = document.createElement("ol");
       newOl.id = "newOl";
+      newOl.style.width = "80px";
       newOl.style.fontSize = "5px";
       newOl.style.fontFamily = "Verdana";
       newOl.style.paddingLeft = "10px";
@@ -121,7 +138,7 @@ function TracklistPoster() {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && !showPoster) {
         handleSearch();
       }
     };
@@ -130,7 +147,7 @@ function TracklistPoster() {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [handleSearch]);
+  }, [handleSearch, showPoster]);
 
   const downloadPosterAsPDF = () => {
     const input = document.querySelector(".poster-content");
@@ -155,15 +172,25 @@ function TracklistPoster() {
         const pdf = new jsPDF({
           orientation: "portrait",
           unit: "mm",
-          format: [215.9, 279.4],
+          format: [215.9, 278.5],
         });
         const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        const pdfName = albumName.toLowerCase().replace(/ /g, "_") + "_tracklist.pdf";
         pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save("download.pdf");
+        pdf.save(pdfName);
       });
     });
+  };
+
+  const getDominantColors = async () => {
+    const colorthief = new ColorThief();
+    const cover = document.getElementById("album-cover");
+    const dominantColor = colorthief.getColor(cover);
+    const paletteColors = colorthief.getPalette(cover);
+
+    setAlbumColors([dominantColor, ...paletteColors.slice(0, 4)]);
   };
 
   return (
@@ -228,7 +255,12 @@ function TracklistPoster() {
         <div className="poster-frame">
           {showPoster && (
             <div className="poster-content">
-              <img src={albumCover} alt={albumName}></img>
+              <img
+                id="album-cover"
+                onLoad={getDominantColors}
+                src={albumCover}
+                alt={albumName}
+                crossOrigin="anonymous"></img>
               <div className="tracklist">
                 <ol className="tracks">
                   {tracks.map((track) => (
@@ -236,8 +268,24 @@ function TracklistPoster() {
                   ))}
                 </ol>
                 <div className="title">
+                  <div className="colors">
+                    {albumColors.map((color, index) => (
+                      <div
+                        key={index}
+                        className="color"
+                        style={{
+                          backgroundColor: `rgb(${color[0]}, ${color[1]}, ${color[2]})`,
+                          height: "17.5px",
+                          width: "17.5px",
+                        }}></div>
+                    ))}
+                  </div>
                   <h6>{albumName}</h6>
-                  <p>{artist}</p>
+                  <p id="artist">{artists}</p>
+                  <p id="duration-date">
+                    {duration} / {albumDate}
+                  </p>
+                  <p id="label">{label}</p>
                 </div>
               </div>
             </div>
