@@ -4,6 +4,7 @@ import "./Components.css";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import ColorThief from "colorthief";
+import { FileMusic, Search, ArrowClockwise, Download } from "react-bootstrap-icons";
 
 function TracklistPoster() {
   const [token, setToken] = useState(null);
@@ -98,7 +99,7 @@ function TracklistPoster() {
     if (originalOl.scrollHeight > originalOlHeight) {
       let newOl = document.createElement("ol");
       newOl.id = "newOl";
-      newOl.style.width = "80px";
+      newOl.style.minWidth = "80px";
       newOl.style.fontSize = "5px";
       newOl.style.fontFamily = "Verdana";
       newOl.style.paddingLeft = "10px";
@@ -111,7 +112,7 @@ function TracklistPoster() {
 
       for (let i = originalOl.children.length - 1; i >= 0; i--) {
         let child = originalOl.children[i];
-        newOl.appendChild(child.cloneNode(true), newOl.firstChild);
+        newOl.insertBefore(child.cloneNode(true), newOl.firstChild);
         cumulativeHeight += newOl.firstChild.offsetHeight;
 
         if (cumulativeHeight > originalOlHeight) {
@@ -220,6 +221,10 @@ function TracklistPoster() {
             disabled={showPoster}
             onClick={handleSearch}
             style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
               backgroundColor: showPoster ? "gray" : "#1DB954",
               cursor: "pointer",
             }}
@@ -229,11 +234,16 @@ function TracklistPoster() {
             onMouseLeave={(e) => {
               e.target.style.backgroundColor = showPoster ? "gray" : "#1DB954";
             }}>
+            <Search style={{ marginRight: "0.5rem" }} />
             Search
           </button>
           {showPoster && (
             <button
               style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
                 backgroundColor: "#143f9d",
                 cursor: "pointer",
               }}
@@ -244,15 +254,36 @@ function TracklistPoster() {
                 e.target.style.backgroundColor = "#143f9d";
               }}
               onClick={() => window.location.reload()}>
+              <ArrowClockwise style={{ marginRight: "0.5rem" }} />
               Refresh Page
             </button>
           )}
-          {showPoster && <button onClick={downloadPosterAsPDF}>Download Poster</button>}
+          {showPoster && (
+            <button
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={downloadPosterAsPDF}>
+              <Download style={{ marginRight: "0.5rem" }} />
+              Download Poster
+            </button>
+          )}
         </div>
       </div>
       <div className="tracklist-poster-right">
         <h1>Tracklist Poster</h1>
         <div className="poster-frame">
+          <FileMusic
+            style={{
+              display: showPoster ? "none" : "block",
+              width: "100px",
+              height: "100px",
+              color: "lightgray",
+            }}
+          />
           {showPoster && (
             <div className="poster-content">
               <img

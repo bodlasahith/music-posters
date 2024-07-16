@@ -412,7 +412,7 @@ body {
 }
 
 #artist {
-  margin-top: 0;
+  margin-top: 3px;
   font-size: 8px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
@@ -423,6 +423,7 @@ body {
   font-size: 6px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
+  color: dimgray;
 }
 
 .colors {
