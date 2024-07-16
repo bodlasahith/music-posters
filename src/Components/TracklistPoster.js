@@ -203,6 +203,7 @@ function TracklistPoster() {
           placeholder="Enter Album..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ fontFamily: "inherit" }}
         />
         {searchResults.length > 0 && (
           <div className="poster-results">
@@ -234,7 +235,7 @@ function TracklistPoster() {
             onMouseLeave={(e) => {
               e.target.style.backgroundColor = showPoster ? "gray" : "#1DB954";
             }}>
-            <Search style={{ marginRight: "0.5rem" }} />
+            <Search style={{ marginRight: "0.5rem", backgroundColor: "none" }} />
             Search
           </button>
           {showPoster && (
@@ -254,7 +255,7 @@ function TracklistPoster() {
                 e.target.style.backgroundColor = "#143f9d";
               }}
               onClick={() => window.location.reload()}>
-              <ArrowClockwise style={{ marginRight: "0.5rem" }} />
+              <ArrowClockwise style={{ marginRight: "0.5rem", backgroundColor: "none" }} />
               Refresh Page
             </button>
           )}
@@ -267,7 +268,7 @@ function TracklistPoster() {
                 justifyContent: "center",
               }}
               onClick={downloadPosterAsPDF}>
-              <Download style={{ marginRight: "0.5rem" }} />
+              <Download style={{ marginRight: "0.5rem", backgroundColor: "none" }} />
               Download Poster
             </button>
           )}

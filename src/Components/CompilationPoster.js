@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
+import { FilePlus } from "react-bootstrap-icons";
 
 function CompilationPoster() {
   const [token, setToken] = useState(null);
@@ -87,13 +88,13 @@ function CompilationPoster() {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
       }
-  
+
       const data = await response.json();
-  
+
       const type = answers[1];
       if (type === "Artists") {
         setArtists(data.items);
@@ -147,6 +148,18 @@ function CompilationPoster() {
           </div>
         </form>
         <button onClick={handleSubmit}>Submit</button>
+      </div>
+      <div className="compilation-poster-right">
+        <h1>Artists</h1>
+        <div className="poster-frame">
+          <FilePlus
+            style={{
+              width: "100px",
+              height: "100px",
+              color: "lightgray",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
