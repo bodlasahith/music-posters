@@ -197,10 +197,10 @@ function TracklistPoster() {
   return (
     <div className="tracklist-poster">
       <div className="tracklist-poster-left">
-        <h1>Search...</h1>
+        <h1>Search</h1>
         <input
           type="text"
-          placeholder="Enter Album..."
+          placeholder="Enter Album or Artist..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ fontFamily: "inherit" }}
@@ -217,7 +217,7 @@ function TracklistPoster() {
             ))}
           </div>
         )}
-        <div className="search-and-refresh">
+        <div className="buttons-container">
           <button
             disabled={showPoster}
             onClick={handleSearch}

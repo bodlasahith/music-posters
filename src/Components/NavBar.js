@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { HouseDoor, BoxArrowLeft, FilePlus, FileMusic, Stars } from "react-bootstrap-icons";
+import { HouseDoor, BoxArrowLeft, BorderAll, FileMusic, Stars } from "react-bootstrap-icons";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function NavBar() {
       </Link>
       <Link className="nav-link" to="/compilation-poster">
         <div className="nav-button">
-          <FilePlus />
+          <BorderAll />
           <p>Compilation Poster</p>
         </div>
       </Link>

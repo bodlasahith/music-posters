@@ -136,31 +136,32 @@ body {
   margin-right: 2rem;
 }
 
-.compilation-poster-left form {
+.question-container {
   height: 55%;
   margin-left: 2rem;
   margin-right: 2rem;
+  margin-top: 2rem;
   overflow-y: scroll;
   background: white;
   border-radius: 10px;
   border: 5px solid skyblue;
 }
 
-.compilation-poster-left form::-webkit-scrollbar {
+.question-container::-webkit-scrollbar {
   width: 10px;
 }
 
-.compilation-poster-left form::-webkit-scrollbar-track {
+.question-container::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 5px;
 }
 
-.compilation-poster-left form::-webkit-scrollbar-thumb {
+.question-container::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 }
 
-.compilation-poster-left form::-webkit-scrollbar-thumb:hover {
+.question-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
@@ -174,39 +175,66 @@ body {
   margin: 0.5rem;
 }
 
-#number-selection {
+#quantity-selection, #dimension-selection, #caption-selection {
   -webkit-appearance: none;
   appearance: none;
   height: 10px;
-  background: #aeddae;
   outline: none;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
 
-#number-selection::-webkit-slider-thumb {
+#quantity-selection::-webkit-slider-thumb, #dimension-selection::-webkit-slider-thumb,
+#caption-selection::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
   height: 25px;
-  background: #1DB954;
   cursor: pointer;
   border-radius: 50%;
 }
 
-#number-selection::-moz-range-thumb {
+#quantity-selection::-moz-range-thumb, #dimension-selection::-moz-range-thumb,
+#caption-selection::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #1DB954;
   cursor: pointer;
 }
 
+#quantity-selection {
+  background: #aeddae;
+}
+
+#quantity-selection::-webkit-slider-thumb {
+  background: #1DB954;
+}
+
+#dimension-selection {
+  background: #99abd2;
+}
+
+#dimension-selection::-webkit-slider-thumb {
+  background: #143f9d;
+}
+
+#caption-selection {
+  background: #f0d9b5;
+}
+
+#caption-selection::-webkit-slider-thumb {
+  background: #d9b514;
+}
+
 .compilation-poster-left button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  cursor: pointer;
   background-color: #1DB954;
   color: white;
   padding: 15px 30px;
-  margin-left: 2rem;
-  margin-right: 2rem;
   margin-top: 2rem;
   border: none;
   border-radius: 30px;
@@ -267,7 +295,7 @@ body {
   border: none;
 }
 
-.search-and-refresh {
+.buttons-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
