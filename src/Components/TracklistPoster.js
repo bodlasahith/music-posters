@@ -235,7 +235,7 @@ function TracklistPoster() {
             onMouseLeave={(e) => {
               e.target.style.backgroundColor = showPoster ? "gray" : "#1DB954";
             }}>
-            <Search style={{ marginRight: "0.5rem", backgroundColor: "none" }} />
+            <Search style={{ marginRight: "0.5rem", backgroundColor: "transparent" }} />
             Search
           </button>
           {showPoster && (
@@ -255,7 +255,7 @@ function TracklistPoster() {
                 e.target.style.backgroundColor = "#143f9d";
               }}
               onClick={() => window.location.reload()}>
-              <ArrowClockwise style={{ marginRight: "0.5rem", backgroundColor: "none" }} />
+              <ArrowClockwise style={{ marginRight: "0.5rem", backgroundColor: "transparent" }} />
               Refresh Page
             </button>
           )}
@@ -268,7 +268,7 @@ function TracklistPoster() {
                 justifyContent: "center",
               }}
               onClick={downloadPosterAsPDF}>
-              <Download style={{ marginRight: "0.5rem", backgroundColor: "none" }} />
+              <Download style={{ marginRight: "0.5rem", backgroundColor: "transparent" }} />
               Download Poster
             </button>
           )}
