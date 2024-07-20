@@ -133,7 +133,12 @@ function TracklistPoster() {
       } else {
         tracksContainer.parentNode.appendChild(newOl);
       }
-      document.querySelector(".tracks").style.width = "80px";
+
+      if (startNumber > 1) {
+        document.querySelector(".tracks").style.width = "80px";
+      } else {
+        document.querySelector(".tracks").style.display = "none";
+      }
     }
   };
 

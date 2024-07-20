@@ -1,29 +1,17 @@
-import requests
+import torch
+from diffusers import StableDiffusionPipeline
 
-# Replace with actual API endpoint and your API key
-api_endpoint = 'https://api.example.com/image-generator'
-api_key = 'your_api_key_here'
+# Load the pre-trained Stable Diffusion model from Hugging Face
+model_id = "CompVis/stable-diffusion-v1-4"
+pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
+pipe = pipe.to("cuda")
 
-# Example parameters (replace with actual data or prompts)
-params = {
-    'text': 'A surreal landscape with floating islands'
-}
+# Define your text prompt
+prompt = "A futuristic cityscape at sunset"
 
-# Headers with API key
-headers = {
-    'Authorization': f'Bearer {api_key}',
-    'Content-Type': 'application/json'
-}
+# Generate an image from the text prompt
+with torch.autocast("cuda"):
+    image = pipe(prompt)["sample"][0]
 
-# Make a GET request to the API
-response = requests.get(api_endpoint, headers=headers, params=params)
-
-# Check if request was successful (status code 200)
-if response.status_code == 200:
-    # Handle the response data (assuming JSON response)
-    response_data = response.json()
-    # Example: Save or display the generated image
-    image_url = response_data.get('image_url')
-    print(f'Generated image URL: {image_url}')
-else:
-    print(f'Error: {response.status_code}, {response.text}')
+# Save the generated image
+image.save("public/images/generated_image.png")

@@ -18,43 +18,53 @@ function Home() {
 
   useEffect(() => {
     const fetchArtists = async () => {
-      const response = await fetch(
-        `https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setArtists(data.items);
+      try {
+        const response = await fetch(
+          `https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        setArtists(data.items);
+      } catch (error) {
+        console.error("Error fetching artists:", error);
+        window.localStorage.removeItem("token");
+        navigate("/");
+      }
     };
 
     const fetchTracks = async () => {
-      const response = await fetch(
-        `https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      const allTracks = data.items;
-
-      if (allTracks) {
-        const albumIds = new Set();
-        const uniqueTracks = allTracks.filter((track) => {
-          const isUnique = !albumIds.has(track.album.id);
-          if (isUnique) {
-            albumIds.add(track.album.id);
+      try {
+        const response = await fetch(
+          `https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-          return isUnique;
-        });
-
-        setTracks(uniqueTracks);
+        );
+        const data = await response.json();
+        const allTracks = data.items;
+  
+        if (allTracks) {
+          const albumIds = new Set();
+          const uniqueTracks = allTracks.filter((track) => {
+            const isUnique = !albumIds.has(track.album.id);
+            if (isUnique) {
+              albumIds.add(track.album.id);
+            }
+            return isUnique;
+          });
+  
+          setTracks(uniqueTracks);
+        }
+      } catch (error) {
+        console.error("Error fetching tracks:", error);
       }
     };
 
@@ -62,7 +72,7 @@ function Home() {
       fetchArtists();
       fetchTracks();
     }
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
     if (artists && tracks) {
