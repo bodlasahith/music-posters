@@ -31,7 +31,10 @@ function TracklistPoster() {
   }, [navigate]);
 
   const handleSearch = useCallback(async () => {
-    if (!searchTerm) return;
+    if (!searchTerm) {
+      alert("Please enter an artist before submitting.");
+      return;
+    }
 
     const endpoint = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
       searchTerm
@@ -90,6 +93,16 @@ function TracklistPoster() {
       setOverflowAdjusted(true);
     }
   }, [showPoster, overflowAdjusted]);
+
+  useEffect(() => {
+    if (showPoster && albumColors.length !== 0) {
+      const posterContent = document.querySelector(".poster-content");
+      const primaryColor = albumColors[1];
+      const secondaryColor = albumColors[2];
+
+      posterContent.style.background = `linear-gradient(to bottom right, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.2), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.2))`;
+    }
+  }, [showPoster, albumColors]);
 
   const adjustOverflow = async () => {
     let originalPosterContent = document.querySelector(".tracklist");

@@ -1,16 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { HouseDoor, BoxArrowLeft, BorderAll, FileMusic, Stars } from "react-bootstrap-icons";
+import { HouseDoor, BorderAll, FileMusic, Stars, PersonCircle } from "react-bootstrap-icons";
 
 function NavBar() {
-  const navigate = useNavigate();
-
-  const logout = () => {
-    window.localStorage.removeItem("token");
-    navigate("/");
-  };
-
   return (
     <div className="nav-bar">
       <Link className="nav-link" to="/home">
@@ -37,10 +29,10 @@ function NavBar() {
           <p>AI Poster</p>
         </div>
       </Link>
-      <Link className="nav-link" to="/" onClick={logout}>
+      <Link className="nav-link" to="/profile">
         <div className="nav-button">
-          <BoxArrowLeft />
-          <p>Logout</p>
+          <PersonCircle />
+          <p>Profile</p>
         </div>
       </Link>
     </div>

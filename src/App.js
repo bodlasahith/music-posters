@@ -7,6 +7,7 @@ import NavBar from "./Components/Navbar";
 import AIPoster from "./Components/AIPoster";
 import CompilationPoster from "./Components/CompilationPoster";
 import TracklistPoster from "./Components/TracklistPoster";
+import Profile from "./Components/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/compilation-poster" element={<CompilationPoster />} />
           <Route path="/aiposter" element={<AIPoster />} />
           <Route path="/tracklist-poster" element={<TracklistPoster />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
         </Routes>
       </BrowserRouter>

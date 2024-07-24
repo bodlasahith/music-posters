@@ -28,7 +28,7 @@ function CompilationPoster() {
     setToken(storedToken);
   }, [navigate]);
 
-  const collageQuestions = [
+  const generatorQuestions = [
     {
       id: 1,
       questionText: "Top Albums or Artists?",
@@ -61,6 +61,11 @@ function CompilationPoster() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!answers[1] || !answers[2] || !answers[3]) {
+      alert("Please answer all the questions before submitting.");
+      return;
+    }
 
     const type = answers[1];
     const timeRange = answers[2];
@@ -191,7 +196,7 @@ function CompilationPoster() {
       <div className="compilation-poster-left">
         <h1>Generator Survey</h1>
         <form className="question-container">
-          {collageQuestions.map((question) => (
+          {generatorQuestions.map((question) => (
             <div key={question.id}>
               <h3>
                 {question.id}. {question.questionText}

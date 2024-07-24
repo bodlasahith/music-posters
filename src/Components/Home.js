@@ -65,6 +65,8 @@ function Home() {
         }
       } catch (error) {
         console.error("Error fetching tracks:", error);
+        window.localStorage.removeItem("token");
+        navigate("/");
       }
     };
 
