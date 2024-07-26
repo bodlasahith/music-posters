@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { SPOTIFY_CLIENT_ID } from "../env";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function App() {
   const REDIRECT_URI = "http://localhost:3000";

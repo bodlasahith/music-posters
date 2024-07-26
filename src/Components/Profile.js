@@ -55,29 +55,29 @@ function Profile() {
     }
   };
 
-  // const deletePoster = async (index) => {
-  //   const userId = window.localStorage.getItem("userId");
-  //   const poster = userInfo.posters[index];
+  const deletePoster = async (index) => {
+    const userId = window.localStorage.getItem("userId");
+    const poster = userInfo.posters[index];
 
-  //   try {
-  //     await axios.post(
-  //       "http://localhost:3001/api/delete-poster",
-  //       { userId: userId, poster: poster },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
+    try {
+      await axios.post(
+        "http://localhost:3001/api/delete-poster",
+        { userId: userId, poster: poster },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  //     const updatedPosters = userInfo.posters.filter((_, i) => i !== index);
-  //     setUserInfo({ ...userInfo, posters: updatedPosters });
+      const updatedPosters = userInfo.posters.filter((_, i) => i !== index);
+      setUserInfo({ ...userInfo, posters: updatedPosters });
 
-  //     console.log("Poster deleted successfully");
-  //   } catch (error) {
-  //     console.error("Error deleting poster:", error);
-  //   }
-  // };
+      console.log("Poster deleted successfully");
+    } catch (error) {
+      console.error("Error deleting poster:", error);
+    }
+  };
 
   const getTopArtists = async () => {
     try {
@@ -192,10 +192,21 @@ function Profile() {
       </div>
       <div className="posters">
         <h2>Saved Compilation Posters</h2>
+        <h5>Right-click to delete (PERMANENT)</h5>
         {showInfo && userInfo.posters && userInfo.posters.length > 0 && (
           <div className="poster-container">
             {userInfo.posters.map((poster, index) => (
-              <img key={index} src={poster} style={{ width: "25%" }} alt={`Poster ${index + 1}`} />
+              <div key={index} style={{ display: "flex" }}>
+                <img
+                  src={poster}
+                  style={{ width: "25%" }}
+                  alt={`Poster ${index + 1}`}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    deletePoster(index);
+                  }}
+                />
+              </div>
             ))}
           </div>
         )}
