@@ -49,7 +49,6 @@ function Profile() {
 
       setUserInfo(userInfo.data);
       setShowInfo(true);
-      console.log(userInfo.data);
     } catch (error) {
       console.error("Error fetching user info:", error);
     }
@@ -72,8 +71,6 @@ function Profile() {
 
       const updatedPosters = userInfo.posters.filter((_, i) => i !== index);
       setUserInfo({ ...userInfo, posters: updatedPosters });
-
-      console.log("Poster deleted successfully");
     } catch (error) {
       console.error("Error deleting poster:", error);
     }
