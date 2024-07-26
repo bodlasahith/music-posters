@@ -28,12 +28,16 @@ function Home() {
             },
           }
         );
+
+        if (response.status === 401) {
+          window.localStorage.removeItem("token");
+          navigate("/");
+        }
+
         const data = await response.json();
         setArtists(data.items);
       } catch (error) {
         console.error("Error fetching artists:", error);
-        window.localStorage.removeItem("token");
-        navigate("/");
       }
     };
 
@@ -48,9 +52,15 @@ function Home() {
             },
           }
         );
+
+        if (response.status === 401) {
+          window.localStorage.removeItem("token");
+          navigate("/");
+        }
+
         const data = await response.json();
         const allTracks = data.items;
-  
+
         if (allTracks) {
           const albumIds = new Set();
           const uniqueTracks = allTracks.filter((track) => {
@@ -60,13 +70,11 @@ function Home() {
             }
             return isUnique;
           });
-  
+
           setTracks(uniqueTracks);
         }
       } catch (error) {
         console.error("Error fetching tracks:", error);
-        window.localStorage.removeItem("token");
-        navigate("/");
       }
     };
 
@@ -95,6 +103,7 @@ function Home() {
   return (
     <div className="home">
       <h1>Music Posters</h1>
+      <h3>Generate personal posters of your top artists, albums, and tracks.</h3>
       {artists && (
         <div className="carousel-container" data-direction="left" data-speed="slow">
           <div className="image-carousel" id="top-carousel">
@@ -105,6 +114,19 @@ function Home() {
                 alt={artist.name}
                 height={100}
                 width={100}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = "scale(1.1)";
+                  e.target.style.cursor = "pointer";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = "scale(1)";
+                }}
+                style={{
+                  borderRadius: "50%",
+                  padding: "5px",
+                  transition: "transform 0.2s ease-in-out",
+                }}
+                onClick={() => window.open(artist.external_urls.spotify)}
               />
             ))}
           </div>
@@ -120,6 +142,19 @@ function Home() {
                 alt={track.name}
                 height={100}
                 width={100}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = "scale(1.1)";
+                  e.target.style.cursor = "pointer";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = "scale(1)";
+                }}
+                style={{
+                  borderRadius: "50%",
+                  padding: "5px",
+                  transition: "transform 0.2s ease-in-out",
+                }}
+                onClick={() => window.open(track.album.external_urls.spotify)}
               />
             ))}
           </div>

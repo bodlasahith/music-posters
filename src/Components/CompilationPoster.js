@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
-import { BorderAll, ArrowRight, Download } from "react-bootstrap-icons";
+import { BorderAll, ArrowRight, Download, Save } from "react-bootstrap-icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import axios from "axios";
 
 function CompilationPoster() {
   const [token, setToken] = useState(null);
@@ -15,7 +16,7 @@ function CompilationPoster() {
   const [rawDimensions, setRawDimensions] = useState([0, 0]);
   const [posterDimensions, setPosterDimensions] = useState([0, 0]);
   const [selectedNumber, setSelectedNumber] = useState(1);
-  const [selectedDimenions, setSelectedDimensions] = useState(38.8);
+  const [selectedDimensions, setSelectedDimensions] = useState(38.8);
   const [captionFontSize, setCaptionFontSize] = useState(0.2);
 
   let currentDate = new Date();
@@ -118,6 +119,11 @@ function CompilationPoster() {
         },
       });
 
+      if (response.status === 401) {
+        window.localStorage.removeItem("token");
+        navigate("/");
+      }
+
       if (!response.ok) {
         throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
       }
@@ -191,6 +197,66 @@ function CompilationPoster() {
     });
   };
 
+  const storePosters = async () => {
+    const poster = document.querySelector(".compilation-content");
+    const images = poster.getElementsByTagName("img");
+
+    // Enable CORS on images
+    for (let img of images) {
+      img.crossOrigin = "anonymous";
+    }
+
+    // Create a new canvas element for resizing
+    const resizeCanvas = document.createElement("canvas");
+    const ctx = resizeCanvas.getContext("2d");
+
+    // Set the desired width and height for the resized image
+    const desiredWidth = 800; // Adjust as needed
+    const imgProps = images[0].getBoundingClientRect();
+    const aspectRatio = imgProps.width / imgProps.height;
+    const desiredHeight = desiredWidth / aspectRatio;
+
+    resizeCanvas.width = desiredWidth;
+    resizeCanvas.height = desiredHeight;
+
+    // Draw the original image onto the new canvas at the desired size
+    ctx.drawImage(images[0], 0, 0, desiredWidth, desiredHeight);
+
+    // Convert the resized canvas to a data URL with a lower quality setting
+    const resizedImgData = resizeCanvas.toDataURL("image/png", 0.7); // Adjust quality as needed
+
+    const canvas = await html2canvas(poster, { useCORS: true });
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = 210;
+    const imgData = canvas.toDataURL("image/png");
+
+    pdf.addPage();
+    pdf.setFontSize(12);
+    pdf.text("My Compilation Poster", 10, 10);
+    pdf.text("Generated on: " + new Date().toLocaleDateString(), 10, 20);
+    pdf.addImage(
+      resizedImgData,
+      "PNG",
+      10,
+      50,
+      pdfWidth,
+      (desiredHeight * pdfWidth) / desiredWidth
+    );
+
+    const pdfData = pdf.output("datauristring");
+
+    const userId = window.localStorage.getItem("userId");
+
+    try {
+      await axios.post("http://localhost:3001/api/add-poster", {
+        userId: userId,
+        poster: pdfData,
+      });
+    } catch (error) {
+      console.error("Error storing poster:", error);
+    }
+  };
+
   return (
     <div className="compilation-poster">
       <div className="compilation-poster-left">
@@ -228,13 +294,13 @@ function CompilationPoster() {
           </div>
           {showPoster && (
             <div>
-              <h3>5. Image size?: {selectedDimenions}</h3>
+              <h3>5. Image size?: {selectedDimensions}</h3>
               <input
                 type="range"
                 id="dimension-selection"
                 min="1.0"
                 max="100.0"
-                value={selectedDimenions}
+                value={selectedDimensions}
                 onChange={handleSecondSliderChange}
                 step="0.1"
               />
@@ -281,6 +347,27 @@ function CompilationPoster() {
               <Download style={{ marginLeft: "0.5rem", backgroundColor: "none" }} />
             </button>
           )}
+          {showPoster && (
+            <button
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#cd00f1",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#af00ce";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#cd00f1";
+              }}
+              onClick={storePosters}>
+              Save Locally
+              <Save style={{ marginLeft: "0.5rem", backgroundColor: "none" }} />
+            </button>
+          )}
         </div>
       </div>
       <div className="compilation-poster-right">
@@ -315,8 +402,8 @@ function CompilationPoster() {
                     key={artist.id}
                     src={artist.images[0].url}
                     alt={artist.name}
-                    height={selectedDimenions}
-                    width={selectedDimenions}
+                    height={selectedDimensions}
+                    width={selectedDimensions}
                     style={{ margin: "2px", marginBottom: "-2px" }}
                   />
                 ))}
@@ -354,8 +441,8 @@ function CompilationPoster() {
                     key={album.album.id}
                     src={album.album.images[0].url}
                     alt={album.name}
-                    height={selectedDimenions}
-                    width={selectedDimenions}
+                    height={selectedDimensions}
+                    width={selectedDimensions}
                     style={{ margin: "2px", marginBottom: "-2px" }}
                   />
                 ))}
@@ -367,7 +454,7 @@ function CompilationPoster() {
                     marginLeft: "245px",
                     marginTop: "5px",
                     fontFamily: "Verdana, sans-serif",
-                    fontSize:  captionFontSize + "rem",
+                    fontSize: captionFontSize + "rem",
                   }}>
                   My top albums: {currentDate.toDateString()}
                 </p>

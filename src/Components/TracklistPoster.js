@@ -46,12 +46,18 @@ function TracklistPoster() {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (response.status === 401) {
+        window.localStorage.removeItem("token");
+        navigate("/");
+      }
+
       const data = await response.json();
       setSearchResults(data.albums.items.filter((item) => item.album_type !== "single"));
     } catch (error) {
       console.error("Error during Spotify search:", error);
     }
-  }, [searchTerm, token]);
+  }, [searchTerm, token, navigate]);
 
   const getTracks = async (albumId) => {
     if (showPoster) return;
@@ -63,6 +69,12 @@ function TracklistPoster() {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (response.status === 401) {
+        window.localStorage.removeItem("token");
+        navigate("/");
+      }
+
       const data = await response.json();
       setAlbumCover(data.images[0].url);
       setAlbumName(data.name);
@@ -100,7 +112,7 @@ function TracklistPoster() {
       const primaryColor = albumColors[1];
       const secondaryColor = albumColors[2];
 
-      posterContent.style.background = `linear-gradient(to bottom right, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.2), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.2))`;
+      posterContent.style.background = `linear-gradient(to bottom right, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.5), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.5))`;
     }
   }, [showPoster, albumColors]);
 
