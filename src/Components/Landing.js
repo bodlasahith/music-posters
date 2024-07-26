@@ -44,38 +44,13 @@ function App() {
       });
       const data = await response.json();
 
-      const userInfoInput = {
-        id: data.id,
-        email: data.email,
-        username: data.display_name,
-        account: data.external_urls.spotify,
-        image: data.images[0].url,
-      };
-
-      getProfile(userInfoInput);
+      window.localStorage.setItem("userId", data.id);
+      window.localStorage.setItem("email", data.email);
+      window.localStorage.setItem("username", data.display_name);
+      window.localStorage.setItem("account", data.external_urls.spotify);
+      window.localStorage.setItem("image", data.images[0].url);
     } catch (error) {
       console.error("Error fetching user info:", error);
-    }
-  };
-
-  const getProfile = async (userInfoInput) => {
-    try {
-      const queryString = new URLSearchParams(userInfoInput).toString();
-
-      const userInfoOutput = await axios.get(`http://localhost:3001/api/get-user?${queryString}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      window.localStorage.setItem("userId", userInfoInput.id);
-      window.localStorage.setItem("username", userInfoInput.username);
-      window.localStorage.setItem("email", userInfoInput.email);
-      window.localStorage.setItem("account", userInfoInput.account);
-      window.localStorage.setItem("image", userInfoInput.image);
-    } catch (error) {
-      console.error("Error fetching user profile:", error);
     }
   };
 

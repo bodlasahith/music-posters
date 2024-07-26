@@ -37,10 +37,13 @@ function AIPoster() {
         type="text"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Enter prompt"
+        placeholder="Enter your prompt here..."
+        className="prompt-input"
       />
-      <button onClick={handleGenerateImage}>Generate Poster</button>
-      {imageSrc && <img src={imageSrc} alt="Generated" />}
+      <button onClick={handleGenerateImage} className="generate-button">
+        Generate Image
+      </button>
+      {imageSrc && <img src={imageSrc} alt="Generated Poster" className="generated-image" />}
     </div>
   );
 }

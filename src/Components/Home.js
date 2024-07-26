@@ -103,7 +103,7 @@ function Home() {
   return (
     <div className="home">
       <h1>Music Posters</h1>
-      <h3>Generate personal posters of your top artists, albums, and tracks.</h3>
+      <h3>Generate personal posters of your top artists, albums, and tracks!</h3>
       {artists && (
         <div className="carousel-container" data-direction="left" data-speed="slow">
           <div className="image-carousel" id="top-carousel">

@@ -13,6 +13,8 @@ function CompilationPoster() {
   const [artists, setArtists] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [showPoster, setShowPoster] = useState(false);
+  const [showArtistPoster, setShowArtistPoster] = useState(false);
+  const [showAlbumPoster, setShowAlbumPoster] = useState(false);
   const [rawDimensions, setRawDimensions] = useState([0, 0]);
   const [posterDimensions, setPosterDimensions] = useState([0, 0]);
   const [selectedNumber, setSelectedNumber] = useState(1);
@@ -109,6 +111,13 @@ function CompilationPoster() {
     }
 
     setShowPoster(true);
+    if (type === "Artists") {
+      setShowAlbumPoster(false);
+      setShowArtistPoster(true);
+    } else {
+      setShowArtistPoster(false);
+      setShowAlbumPoster(true);
+    }
   };
 
   const fetchItems = async (endpoint) => {
@@ -199,62 +208,20 @@ function CompilationPoster() {
 
   const storePosters = async () => {
     const poster = document.querySelector(".compilation-content");
-    const images = poster.getElementsByTagName("img");
 
-    // Enable CORS on images
-    for (let img of images) {
-      img.crossOrigin = "anonymous";
-    }
+    html2canvas(poster, { useCORS: true }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const userId = window.localStorage.getItem("userId");
 
-    // Create a new canvas element for resizing
-    const resizeCanvas = document.createElement("canvas");
-    const ctx = resizeCanvas.getContext("2d");
-
-    // Set the desired width and height for the resized image
-    const desiredWidth = 800; // Adjust as needed
-    const imgProps = images[0].getBoundingClientRect();
-    const aspectRatio = imgProps.width / imgProps.height;
-    const desiredHeight = desiredWidth / aspectRatio;
-
-    resizeCanvas.width = desiredWidth;
-    resizeCanvas.height = desiredHeight;
-
-    // Draw the original image onto the new canvas at the desired size
-    ctx.drawImage(images[0], 0, 0, desiredWidth, desiredHeight);
-
-    // Convert the resized canvas to a data URL with a lower quality setting
-    const resizedImgData = resizeCanvas.toDataURL("image/png", 0.7); // Adjust quality as needed
-
-    const canvas = await html2canvas(poster, { useCORS: true });
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = 210;
-    const imgData = canvas.toDataURL("image/png");
-
-    pdf.addPage();
-    pdf.setFontSize(12);
-    pdf.text("My Compilation Poster", 10, 10);
-    pdf.text("Generated on: " + new Date().toLocaleDateString(), 10, 20);
-    pdf.addImage(
-      resizedImgData,
-      "PNG",
-      10,
-      50,
-      pdfWidth,
-      (desiredHeight * pdfWidth) / desiredWidth
-    );
-
-    const pdfData = pdf.output("datauristring");
-
-    const userId = window.localStorage.getItem("userId");
-
-    try {
-      await axios.post("http://localhost:3001/api/add-poster", {
-        userId: userId,
-        poster: pdfData,
-      });
-    } catch (error) {
-      console.error("Error storing poster:", error);
-    }
+      try {
+        axios.post("http://localhost:3001/api/add-poster", {
+          userId: userId,
+          poster: imgData,
+        });
+      } catch (error) {
+        console.error("Error storing poster:", error);
+      }
+    });
   };
 
   return (
@@ -381,7 +348,7 @@ function CompilationPoster() {
               color: "lightgray",
             }}
           />
-          {showPoster && (
+          {showArtistPoster && (
             <div
               style={{
                 display: artists.length > 0 ? "flex" : "none",
@@ -420,7 +387,7 @@ function CompilationPoster() {
               </div>
             </div>
           )}
-          {showPoster && (
+          {showAlbumPoster && (
             <div
               style={{
                 display: albums.length > 0 ? "flex" : "none",
@@ -448,11 +415,9 @@ function CompilationPoster() {
                 ))}
                 <p
                   style={{
-                    display: artists.length > 0 ? "block" : "none",
+                    display: albums.length > 0 ? "block" : "none",
                     color: "white",
                     textAlign: "right",
-                    marginLeft: "245px",
-                    marginTop: "5px",
                     fontFamily: "Verdana, sans-serif",
                     fontSize: captionFontSize + "rem",
                   }}>

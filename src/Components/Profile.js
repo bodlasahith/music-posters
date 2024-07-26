@@ -25,7 +25,7 @@ function Profile() {
     const account = window.localStorage.getItem("account");
     const image = window.localStorage.getItem("image");
 
-    const userInfo = {
+    const info = {
       userId: userId,
       email: email,
       username: username,
@@ -33,26 +33,51 @@ function Profile() {
       image: image,
     };
 
-    getUserInfo(userInfo);
+    getUserInfo(info);
   }, [navigate]);
 
-  const getUserInfo = async (userInfo) => {
+  const getUserInfo = async (info) => {
     try {
-      const queryString = new URLSearchParams(userInfo).toString();
+      const queryString = new URLSearchParams(info).toString();
 
-      const response = await axios.get(`http://localhost:3001/api/get-user?${queryString}`, {
+      const userInfo = await axios.get(`http://localhost:3001/api/get-user?${queryString}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      setUserInfo(response.data);
+      setUserInfo(userInfo.data);
       setShowInfo(true);
+      console.log(userInfo.data);
     } catch (error) {
       console.error("Error fetching user info:", error);
     }
   };
+
+  // const deletePoster = async (index) => {
+  //   const userId = window.localStorage.getItem("userId");
+  //   const poster = userInfo.posters[index];
+
+  //   try {
+  //     await axios.post(
+  //       "http://localhost:3001/api/delete-poster",
+  //       { userId: userId, poster: poster },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     const updatedPosters = userInfo.posters.filter((_, i) => i !== index);
+  //     setUserInfo({ ...userInfo, posters: updatedPosters });
+
+  //     console.log("Poster deleted successfully");
+  //   } catch (error) {
+  //     console.error("Error deleting poster:", error);
+  //   }
+  // };
 
   const getTopArtists = async () => {
     try {
@@ -133,12 +158,6 @@ function Profile() {
               </p>
             </div>
             <img className="profile-image" src={userInfo.image} alt="User" />
-            {/* <div className="profile-posters">
-              <h2>Posters</h2>
-              {userInfo.posters.map((poster) => (
-                <img key={poster.id} src={poster.image} alt={poster.title} />
-              ))}
-            </div> */}
           </div>
         )}
         <button className="profile-logout-button" onClick={logout}>
@@ -170,6 +189,16 @@ function Profile() {
             ))}
           </p>
         </div>
+      </div>
+      <div className="posters">
+        <h2>Saved Compilation Posters</h2>
+        {showInfo && userInfo.posters && userInfo.posters.length > 0 && (
+          <div className="poster-container">
+            {userInfo.posters.map((poster, index) => (
+              <img key={index} src={poster} style={{ width: "25%" }} alt={`Poster ${index + 1}`} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
