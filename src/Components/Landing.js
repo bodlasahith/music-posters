@@ -10,10 +10,8 @@ function App() {
     "user-read-email",
     "user-library-read",
     "user-read-recently-played",
+    "user-read-currently-playing",
     "user-top-read",
-    "playlist-read-private",
-    "playlist-read-collaborative",
-    "playlist-modify-public",
   ];
   const navigate = useNavigate();
 
@@ -28,7 +26,7 @@ function App() {
 
       window.location.hash = "";
       window.localStorage.setItem("token", token);
-      
+
       getUserInfo(token);
       navigate("/home");
     }
@@ -65,19 +63,7 @@ function App() {
   return (
     <div className="landing">
       <h1>Music Posters</h1>
-      <button
-        style={{
-          backgroundColor: "#1DB954",
-          color: "white",
-          padding: "15px 30px",
-          border: "none",
-          borderRadius: "30px",
-          cursor: "pointer",
-          fontFamily: "inherit",
-        }}
-        onClick={login}>
-        Login to Spotify
-      </button>
+      <button onClick={login}>Login to Spotify</button>
     </div>
   );
 }

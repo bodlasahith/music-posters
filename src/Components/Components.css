@@ -15,6 +15,16 @@ body {
   background: lightcyan;
 }
 
+.landing button {
+  background-color: #1DB954;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 /* Navbar */
 
 .nav-bar {
@@ -58,7 +68,6 @@ body {
 .home {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
@@ -67,6 +76,48 @@ body {
 
 .home h3 {
   color: #666;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5rem;
+  gap: 2rem;
+}
+
+.home-title {
+  width: 1500px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  background: lightblue;
+  margin-top: 1rem;
+}
+
+.description-item {
+  display: flex;
+  flex-direction: flex-start;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.description-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.player {
+  width: 100%;
+}
+
+.player iframe {
+  width: 100%;
+  height: 232px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .carousel-container {

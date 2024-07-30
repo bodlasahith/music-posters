@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
+import { BorderAll, FileMusic, Stars } from "react-bootstrap-icons";
+import Player from "./Player";
 
 function Home() {
   const [token, setToken] = useState(null);
@@ -102,8 +104,27 @@ function Home() {
 
   return (
     <div className="home">
-      <h1>Music Posters</h1>
-      <h3>Generate personal posters of your top artists, albums, and tracks!</h3>
+      <div className="home-content">
+        <div className="home-title">
+          <h1>Music Posters</h1>
+          <h3>Generate personal posters of your top artists, albums, and tracks!</h3>
+          <div className="description">
+            <div className="description-item">
+              <FileMusic className="description-icon" />
+              <p>Create tracklists of your favorite albums</p>
+            </div>
+            <div className="description-item">
+              <BorderAll className="description-icon" />
+              <p>Generate compilations of your top artists or albums</p>
+            </div>
+            <div className="description-item">
+              <Stars className="description-icon" />
+              <p>Design AI generated posters based on your music preferences</p>
+            </div>
+          </div>
+        </div>
+        <Player />
+      </div>
       {artists && (
         <div className="carousel-container" data-direction="left" data-speed="slow">
           <div className="image-carousel" id="top-carousel">
