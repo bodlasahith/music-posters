@@ -1,3 +1,7 @@
+
+https://github.com/user-attachments/assets/b08b7f71-b2f1-402a-80a0-3e18c7eb87c1
+
+https://github.com/user-attachments/assets/4a4bf930-f083-4499-b7d6-d15aa1f07f2b
 # Music Posters
 
 This website provides a seamless integration with Spotify, allowing you to generate personalized posters of your favorite albums, artists, and tracks. By logging in with your Spotify account, you gain access to your entire music library and can easily select the content you want to feature on your posters.
