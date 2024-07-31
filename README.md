@@ -94,3 +94,5 @@ To add the MongoDB endpoint to the `public/server.js` file, follow these steps:
 3. Run `node server.js` to boot up the backend.
 
 Now you have successfully set up the project and added the MongoDB endpoint to the `public/server.js` file.
+
+Uploading Screen Recording 2024-07-30 at 10.59.27 PM.mov…
