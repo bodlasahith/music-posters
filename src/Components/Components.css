@@ -71,7 +71,6 @@ body {
   justify-content: center;
   height: 100%;
   width: 100%;
-  background: lightblue;
 }
 
 .home h3 {
@@ -93,7 +92,6 @@ body {
 .description {
   display: flex;
   flex-direction: column;
-  background: lightblue;
   margin-top: 1rem;
 }
 
@@ -778,7 +776,7 @@ body {
 }
 
 .posters h5 {
-  color: dimgray;
+  color: red;
 }
 
 .posters-container {
