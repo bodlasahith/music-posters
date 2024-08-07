@@ -104,8 +104,8 @@ function Home() {
 
   useEffect(() => {
     const color = window.localStorage.getItem("homeColor");
-    const [r, g, b] = color.split(",");
     if (color) {
+      const [r, g, b] = color.split(",");
       document.querySelector(".home").style.background = `rgba(${r}, ${g}, ${b}, 0.35)`;
     }
   }, []);
