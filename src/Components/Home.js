@@ -102,6 +102,14 @@ function Home() {
     }
   }, [artists, tracks]);
 
+  useEffect(() => {
+    const color = window.localStorage.getItem("homeColor");
+    const [r, g, b] = color.split(",");
+    if (color) {
+      document.querySelector(".home").style.background = `rgba(${r}, ${g}, ${b}, 0.35)`;
+    }
+  }, []);
+
   return (
     <div className="home">
       <div className="home-content">
@@ -111,11 +119,11 @@ function Home() {
           <div className="description">
             <div className="description-item">
               <FileMusic className="description-icon" />
-              <p>Create tracklists of your favorite albums</p>
+              <p>Create and download tracklist posters of your favorite albums</p>
             </div>
             <div className="description-item">
               <BorderAll className="description-icon" />
-              <p>Generate compilations of your top artists or albums</p>
+              <p>Generate, download, and save compilations of your top artists or albums over time</p>
             </div>
             <div className="description-item">
               <Stars className="description-icon" />

@@ -322,7 +322,8 @@ function TracklistPoster() {
                 onLoad={getDominantColors}
                 src={albumCover}
                 alt={albumName}
-                crossOrigin="anonymous"></img>
+                crossOrigin="anonymous" 
+              />
               <div className="tracklist">
                 <ol className="tracks">
                   {tracks.map((track) => (

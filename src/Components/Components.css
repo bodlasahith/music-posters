@@ -74,7 +74,7 @@ body {
 }
 
 .home h3 {
-  color: #666;
+  color: dimgray;
 }
 
 .home-content {
@@ -98,6 +98,7 @@ body {
 .description-item {
   display: flex;
   flex-direction: flex-start;
+  align-items: center;
   margin-top: 1rem;
   gap: 1rem;
 }
@@ -709,6 +710,11 @@ body {
   gap: 20px;
 }
 
+.top-content p {
+  font-size: 0.75em;
+  margin-bottom: 20px;
+}
+
 .profile-top-artists {
   flex: 1;
   display: flex;
@@ -758,6 +764,46 @@ body {
 
 .profile-top-genres h2 {
   text-align: center;
+}
+
+.top-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.top-buttons button {
+  padding: 10px 10px;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  transition: background-color 0.3s ease;
+}
+
+.top-buttons button:nth-child(1) {
+  background-color: #143f9d;
+}
+
+.top-buttons button:nth-child(2) {
+  background-color: #5578c4;
+}
+
+.top-buttons button:nth-child(3) {
+  background-color: #8baaeb;
+}
+
+.top-buttons button:hover {
+  background-color: #1db954;
+}
+
+.profile-top-artists h4,
+.profile-top-tracks h4,
+.profile-top-genres h4 {
+  color: dimgray;
 }
 
 .posters {

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Components.css";
+import ColorThief from "colorthief";
 
 function Player() {
   const [token, setToken] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [trackCover, setTrackCover] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -28,11 +30,12 @@ function Player() {
       });
       const data = await response.json();
 
-      if (data) {
-        if (data.type === "track") {
-          setCurrentTrack(data.item.album.external_urls.spotify);
+      if (data.item) {
+        setCurrentTrack(data.item.external_urls.spotify);
+        if (data.item.album) {
+          setTrackCover(data.item.album.images[0].url);
         } else {
-          setCurrentTrack(data.item.external_urls.spotify);
+          setTrackCover(data.item.images[0].url);
         }
       } else {
         console.error("No track currently playing");
@@ -42,9 +45,25 @@ function Player() {
     }
   };
 
+  const setBackgroundColor = () => {
+    const img = document.querySelector("img");
+    const colorThief = new ColorThief();
+    const color = colorThief.getColor(img);
+    window.localStorage.setItem("homeColor", color);
+  }
+
   return (
     <div className="player">
       <h2>Now playing...</h2>
+      {trackCover && (
+        <img 
+          src={trackCover}
+          onLoad={setBackgroundColor}
+          alt="track cover"
+          crossOrigin="anonymous"
+          style={{display: "none"}}
+        />
+      )}
       {currentTrack && (
         <iframe
           src={`https://open.spotify.com/embed/track/${currentTrack.split("/").pop()}`}
