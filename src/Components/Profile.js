@@ -410,7 +410,7 @@ function Profile() {
       <div className="posters">
         <h2>Saved Compilation Posters</h2>
         <h5>Right-click to delete (PERMANENT)</h5>
-        {showInfo && userInfo.posters && userInfo.posters.length > 0 ? (
+        {showInfo && userInfo.posters && userInfo.posters.length > 0 && (
           <div className="poster-container">
             {userInfo.posters.map((poster, index) => (
               <div key={index} style={{ display: "flex" }}>
@@ -426,7 +426,11 @@ function Profile() {
               </div>
             ))}
           </div>
-        ) : (
+        )}
+        {showInfo && userInfo.posters && userInfo.posters.length === 0 && (
+          <p>No posters saved</p>
+        )}
+        {!showInfo && (
           <p>Loading...</p>
         )}
       </div>
