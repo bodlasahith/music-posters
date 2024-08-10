@@ -102,14 +102,6 @@ function Home() {
     }
   }, [artists, tracks]);
 
-  useEffect(() => {
-    const color = window.localStorage.getItem("homeColor");
-    if (color) {
-      const [r, g, b] = color.split(",");
-      document.querySelector(".home").style.background = `rgba(${r}, ${g}, ${b}, 0.35)`;
-    }
-  }, []);
-
   return (
     <div className="home">
       <div className="home-content">
@@ -118,15 +110,15 @@ function Home() {
           <h3>Generate personal posters of your top artists, albums, and tracks!</h3>
           <div className="description">
             <div className="description-item">
-              <FileMusic className="description-icon" />
+              <FileMusic className="description-icon" id="tracklist-icon" />
               <p>Create and download tracklist posters of your favorite albums</p>
             </div>
             <div className="description-item">
-              <BorderAll className="description-icon" />
+              <BorderAll className="description-icon" id="compilation-icon" />
               <p>Generate, download, and save compilations of your top artists or albums over time</p>
             </div>
             <div className="description-item">
-              <Stars className="description-icon" />
+              <Stars className="description-icon" id="ai-icon" />
               <p>Design AI generated posters based on your music preferences</p>
             </div>
           </div>

@@ -273,7 +273,7 @@ function Profile() {
     <div className="profile">
       <div className="profile-container">
         <h1 className="profile-title">Profile</h1>
-        {showInfo && (
+        {showInfo ? (
           <div className="profile-info">
             <div className="profile-text">
               <p className="profile-username">Username: {userInfo.username}</p>
@@ -284,6 +284,8 @@ function Profile() {
             </div>
             <img className="profile-image" src={userInfo.image} alt="User" />
           </div>
+        ) : (
+          <p>Loading...</p>
         )}
         <button className="profile-logout-button" onClick={logout}>
           Logout
@@ -408,7 +410,7 @@ function Profile() {
       <div className="posters">
         <h2>Saved Compilation Posters</h2>
         <h5>Right-click to delete (PERMANENT)</h5>
-        {showInfo && userInfo.posters && userInfo.posters.length > 0 && (
+        {showInfo && userInfo.posters && userInfo.posters.length > 0 ? (
           <div className="poster-container">
             {userInfo.posters.map((poster, index) => (
               <div key={index} style={{ display: "flex" }}>
@@ -424,6 +426,8 @@ function Profile() {
               </div>
             ))}
           </div>
+        ) : (
+          <p>Loading...</p>
         )}
       </div>
     </div>

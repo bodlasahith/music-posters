@@ -49,7 +49,10 @@ function Player() {
     const img = document.querySelector("img");
     const colorThief = new ColorThief();
     const color = colorThief.getColor(img);
-    window.localStorage.setItem("homeColor", color);
+    if (color) {
+      const [r, g, b] = color;
+      document.querySelector(".home").style.background = `rgba(${r}, ${g}, ${b}, 0.35)`;
+    }
   }
 
   return (
@@ -64,7 +67,7 @@ function Player() {
           style={{display: "none"}}
         />
       )}
-      {currentTrack && (
+      {currentTrack ? (
         <iframe
           src={`https://open.spotify.com/embed/track/${currentTrack.split("/").pop()}`}
           frameBorder="0"
@@ -72,6 +75,8 @@ function Player() {
           allow="encrypted-media"
           title="player"
         />
+      ) : (
+        <p>No track currently playing</p>
       )}
     </div>
   );

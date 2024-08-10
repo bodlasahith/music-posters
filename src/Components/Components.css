@@ -108,6 +108,11 @@ body {
   height: 2rem;
 }
 
+#compilation-icon {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
 .player {
   width: 100%;
 }
@@ -195,14 +200,13 @@ body {
 }
 
 .question-container {
-  height: 55%;
+  height: 56%;
   margin-left: 2rem;
   margin-right: 2rem;
   margin-top: 2rem;
   overflow-y: scroll;
   background: white;
   border-radius: 10px;
-  border: 5px solid skyblue;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -658,6 +662,7 @@ body {
   margin-bottom: 20px;
 }
 
+f
 .profile-username,
 .profile-email,
 .profile-account {
