@@ -413,17 +413,14 @@ function Profile() {
         {showInfo && userInfo.posters && userInfo.posters.length > 0 && (
           <div className="poster-container">
             {userInfo.posters.map((poster, index) => (
-              <div key={index} style={{ display: "flex" }}>
-                <img
-                  src={poster}
-                  style={{ width: "25%" }}
-                  alt={`Poster ${index + 1}`}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                    deletePoster(index);
-                  }}
-                />
-              </div>
+              <img
+                src={poster}
+                alt={`Poster ${index + 1}`}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  deletePoster(index);
+                }}
+              />
             ))}
           </div>
         )}

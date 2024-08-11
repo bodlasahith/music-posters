@@ -218,6 +218,7 @@ function CompilationPoster() {
           userId: userId,
           poster: imgData,
         });
+        alert("Poster saved to profile!");
       } catch (error) {
         console.error("Error storing poster:", error);
       }

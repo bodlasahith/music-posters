@@ -836,5 +836,10 @@ f
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+}
+
+.poster-container img {
+  width: 25%;
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
