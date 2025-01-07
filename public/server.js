@@ -135,8 +135,8 @@ app.get("/generate-image", (req, res) => {
     }
 
     console.log(`stdout: ${stdout}`);
-    const imagePath = stdout.trim();
-    res.sendFile(path.join(__dirname, imagePath));
+    const imagePath = path.join(require('os').homedir(), stdout.trim());
+    res.sendFile(imagePath);
   });
 });
 

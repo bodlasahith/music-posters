@@ -32,7 +32,7 @@ function AIPoster() {
   return (
     <div className="ai-poster">
       <h1>AI Poster Generator</h1>
-      <h2>Click the button below to generate an AI-generated poster. (Windows only)</h2>
+      <h2>Click the button below to generate an AI-generated poster. (CPU only so it's very slow!)</h2>
       <input
         type="text"
         value={prompt}

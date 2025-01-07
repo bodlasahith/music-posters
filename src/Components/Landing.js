@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SPOTIFY_CLIENT_ID } from "../env";
+import { SPOTIFY_CLIENT_ID } from "../env.js";
 import { useNavigate } from "react-router-dom";
 
 function App() {
