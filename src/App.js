@@ -17,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Landing />} />
+          <Route path="/callback" element={<Landing />} />
           <Route path="/compilation-poster" element={<CompilationPoster />} />
           <Route path="/aiposter" element={<AIPoster />} />
           <Route path="/tracklist-poster" element={<TracklistPoster />} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 function Profile() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ function Profile() {
     try {
       const queryString = new URLSearchParams(info).toString();
 
-      const userInfo = await axios.get(`http://localhost:3001/api/get-user?${queryString}`, {
+      const userInfo = await axios.get(`${API_ENDPOINTS.GET_USER}?${queryString}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -75,8 +76,8 @@ function Profile() {
 
     try {
       await axios.post(
-        "http://localhost:3001/api/delete-poster",
-        { userId: userId, poster: poster },
+        API_ENDPOINTS.DELETE_POSTER,
+        { userId: userId, posterId: poster.id },
         {
           headers: {
             "Content-Type": "application/json",
@@ -131,7 +132,7 @@ function Profile() {
       const genresMedium = dataMedium.items.map((artist) => artist.genres).flat();
       const uniqueGenresMedium = [...new Set(genresMedium)];
       setTopGenresMedium(uniqueGenresMedium.splice(0, 10));
-      
+
       const responseLong = await fetch(
         `https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=10`,
         {
@@ -250,7 +251,7 @@ function Profile() {
       setShowTracksMedium(false);
       setShowTracksLong(true);
     }
-  }
+  };
 
   const genreSwitch = (e) => {
     const id = e.target.id;
@@ -267,7 +268,7 @@ function Profile() {
       setShowGenresMedium(false);
       setShowGenresLong(true);
     }
-  }
+  };
 
   return (
     <div className="profile">
@@ -325,9 +326,15 @@ function Profile() {
             </div>
           )}
           <div className="top-buttons">
-            <button id="short-term" onClick={(e) => artistSwitch(e)}>Short-term (4 weeks)</button>
-            <button id="medium-term" onClick={(e) => artistSwitch(e)}>Medium-term (6 months)</button>
-            <button id="long-term" onClick={(e) => artistSwitch(e)}>Long-term (12 months)</button>
+            <button id="short-term" onClick={(e) => artistSwitch(e)}>
+              Short-term (4 weeks)
+            </button>
+            <button id="medium-term" onClick={(e) => artistSwitch(e)}>
+              Medium-term (6 months)
+            </button>
+            <button id="long-term" onClick={(e) => artistSwitch(e)}>
+              Long-term (12 months)
+            </button>
           </div>
         </div>
         <div className="profile-top-tracks">
@@ -363,9 +370,15 @@ function Profile() {
             </div>
           )}
           <div className="top-buttons">
-            <button id="short-term" onClick={(e) => trackSwitch(e)}>Short-term (4 weeks)</button>
-            <button id="medium-term" onClick={(e) => trackSwitch(e)}>Medium-term (6 months)</button>
-            <button id="long-term" onClick={(e) => trackSwitch(e)}>Long-term (12 months)</button>
+            <button id="short-term" onClick={(e) => trackSwitch(e)}>
+              Short-term (4 weeks)
+            </button>
+            <button id="medium-term" onClick={(e) => trackSwitch(e)}>
+              Medium-term (6 months)
+            </button>
+            <button id="long-term" onClick={(e) => trackSwitch(e)}>
+              Long-term (12 months)
+            </button>
           </div>
         </div>
         <div className="profile-top-genres">
@@ -401,9 +414,15 @@ function Profile() {
             </div>
           )}
           <div className="top-buttons">
-            <button id="short-term" onClick={(e) => genreSwitch(e)}>Short-term (4 weeks)</button>
-            <button id="medium-term" onClick={(e) => genreSwitch(e)}>Medium-term (6 months)</button>
-            <button id="long-term" onClick={(e) => genreSwitch(e)}>Long-term (12 months)</button>
+            <button id="short-term" onClick={(e) => genreSwitch(e)}>
+              Short-term (4 weeks)
+            </button>
+            <button id="medium-term" onClick={(e) => genreSwitch(e)}>
+              Medium-term (6 months)
+            </button>
+            <button id="long-term" onClick={(e) => genreSwitch(e)}>
+              Long-term (12 months)
+            </button>
           </div>
         </div>
       </div>
@@ -424,12 +443,8 @@ function Profile() {
             ))}
           </div>
         )}
-        {showInfo && userInfo.posters && userInfo.posters.length === 0 && (
-          <p>No posters saved</p>
-        )}
-        {!showInfo && (
-          <p>Loading...</p>
-        )}
+        {showInfo && userInfo.posters && userInfo.posters.length === 0 && <p>No posters saved</p>}
+        {!showInfo && <p>Loading...</p>}
       </div>
     </div>
   );

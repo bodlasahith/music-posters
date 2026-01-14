@@ -5,6 +5,7 @@ import { BorderAll, ArrowRight, Download, Save } from "react-bootstrap-icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 function CompilationPoster() {
   const [token, setToken] = useState(null);
@@ -214,9 +215,9 @@ function CompilationPoster() {
       const userId = window.localStorage.getItem("userId");
 
       try {
-        axios.post("http://localhost:3001/api/add-poster", {
+        axios.post(API_ENDPOINTS.ADD_POSTER, {
           userId: userId,
-          poster: imgData,
+          poster: { id: Date.now().toString(), data: imgData },
         });
         alert("Poster saved to profile!");
       } catch (error) {
@@ -310,7 +311,8 @@ function CompilationPoster() {
               onMouseLeave={(e) => {
                 e.target.style.backgroundColor = "#143f9d";
               }}
-              onClick={downloadPosterAsPDF}>
+              onClick={downloadPosterAsPDF}
+            >
               Download
               <Download style={{ marginLeft: "0.5rem", backgroundColor: "none" }} />
             </button>
@@ -331,7 +333,8 @@ function CompilationPoster() {
               onMouseLeave={(e) => {
                 e.target.style.backgroundColor = "#cd00f1";
               }}
-              onClick={storePosters}>
+              onClick={storePosters}
+            >
               Save Locally
               <Save style={{ marginLeft: "0.5rem", backgroundColor: "none" }} />
             </button>
@@ -363,7 +366,8 @@ function CompilationPoster() {
                 background: "black",
                 padding: "2px",
               }}
-              className="compilation-content">
+              className="compilation-content"
+            >
               <div className="compilation-images">
                 {artists.map((artist) => (
                   <img
@@ -382,7 +386,8 @@ function CompilationPoster() {
                     textAlign: "right",
                     fontFamily: "Verdana, sans-serif",
                     fontSize: captionFontSize + "rem",
-                  }}>
+                  }}
+                >
                   My top artists: {currentDate.toLocaleDateString()}
                 </p>
               </div>
@@ -402,7 +407,8 @@ function CompilationPoster() {
                 background: "black",
                 padding: "2px",
               }}
-              className="compilation-content">
+              className="compilation-content"
+            >
               <div className="compilation-images">
                 {albums.map((album) => (
                   <img
@@ -421,7 +427,8 @@ function CompilationPoster() {
                     textAlign: "right",
                     fontFamily: "Verdana, sans-serif",
                     fontSize: captionFontSize + "rem",
-                  }}>
+                  }}
+                >
                   My top albums: {currentDate.toDateString()}
                 </p>
               </div>

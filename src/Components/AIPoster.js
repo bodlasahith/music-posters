@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 function AIPoster() {
   const [prompt, setPrompt] = useState("");
@@ -19,7 +20,7 @@ function AIPoster() {
     if (!prompt) return;
     try {
       const response = await axios.get(
-        `http://localhost:3001/generate-image?prompt=${encodeURIComponent(prompt)}`,
+        `${API_ENDPOINTS.GENERATE_IMAGE}?prompt=${encodeURIComponent(prompt)}`,
         { responseType: "blob" }
       );
       const imageUrl = URL.createObjectURL(response.data);
@@ -32,7 +33,9 @@ function AIPoster() {
   return (
     <div className="ai-poster">
       <h1>AI Poster Generator</h1>
-      <h2>Click the button below to generate an AI-generated poster. (CPU only so it's very slow!)</h2>
+      <h2>
+        Click the button below to generate an AI-generated poster. (CPU only so it's very slow!)
+      </h2>
       <input
         type="text"
         value={prompt}
