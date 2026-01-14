@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config/api";
@@ -92,7 +92,7 @@ function Profile() {
     }
   };
 
-  const getTopArtists = async () => {
+  const getTopArtists = useCallback(async () => {
     try {
       const responseShort = await fetch(
         `https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10`,
@@ -152,9 +152,9 @@ function Profile() {
     } catch (error) {
       console.error("Error fetching artists:", error);
     }
-  };
+  }, [token, navigate]);
 
-  const getTopTracks = async () => {
+  const getTopTracks = useCallback(async () => {
     try {
       const responseShort = await fetch(
         `https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=10`,
@@ -205,14 +205,14 @@ function Profile() {
     } catch (error) {
       console.error("Error fetching tracks:", error);
     }
-  };
+  }, [token, navigate]);
 
   useEffect(() => {
     if (token) {
       getTopArtists();
       getTopTracks();
     }
-  }, [token]);
+  }, [token, getTopArtists, getTopTracks]);
 
   const logout = () => {
     window.localStorage.removeItem("token");

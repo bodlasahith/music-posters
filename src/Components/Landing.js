@@ -36,6 +36,41 @@ function App() {
   };
 
   useEffect(() => {
+    const exchangeCodeForToken = async (code, codeVerifier) => {
+      const payload = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          client_id: SPOTIFY_CLIENT_ID,
+          grant_type: "authorization_code",
+          code,
+          redirect_uri: REDIRECT_URI,
+          code_verifier: codeVerifier,
+        }),
+      };
+
+      try {
+        const response = await fetch(TOKEN_ENDPOINT, payload);
+        const data = await response.json();
+
+        if (data.access_token) {
+          localStorage.removeItem("code_verifier");
+          localStorage.setItem("token", data.access_token);
+
+          if (data.refresh_token) {
+            localStorage.setItem("refresh_token", data.refresh_token);
+          }
+
+          await getUserInfo(data.access_token);
+          navigate("/home");
+        }
+      } catch (error) {
+        console.error("Error exchanging code for token:", error);
+      }
+    };
+
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     const error = params.get("error");
@@ -52,42 +87,7 @@ function App() {
         exchangeCodeForToken(code, codeVerifier);
       }
     }
-  }, [navigate]);
-
-  const exchangeCodeForToken = async (code, codeVerifier) => {
-    const payload = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        client_id: SPOTIFY_CLIENT_ID,
-        grant_type: "authorization_code",
-        code,
-        redirect_uri: REDIRECT_URI,
-        code_verifier: codeVerifier,
-      }),
-    };
-
-    try {
-      const response = await fetch(TOKEN_ENDPOINT, payload);
-      const data = await response.json();
-
-      if (data.access_token) {
-        localStorage.removeItem("code_verifier");
-        localStorage.setItem("token", data.access_token);
-
-        if (data.refresh_token) {
-          localStorage.setItem("refresh_token", data.refresh_token);
-        }
-
-        await getUserInfo(data.access_token);
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error("Error exchanging code for token:", error);
-    }
-  };
+  }, [navigate, SPOTIFY_CLIENT_ID]);
 
   const getUserInfo = async (token) => {
     try {

@@ -24,3 +24,5 @@ yarn-error.log*
 
 env.js
 .env
+.vercel
+.env*.local
