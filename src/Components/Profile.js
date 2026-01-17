@@ -286,7 +286,9 @@ function Profile() {
             <img className="profile-image" src={userInfo.image} alt="User" />
           </div>
         ) : (
-          <p>Loading...</p>
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+          </div>
         )}
         <button className="profile-logout-button" onClick={logout}>
           Logout
@@ -444,7 +446,11 @@ function Profile() {
           </div>
         )}
         {showInfo && userInfo.posters && userInfo.posters.length === 0 && <p>No posters saved</p>}
-        {!showInfo && <p>Loading...</p>}
+        {!showInfo && (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+          </div>
+        )}
       </div>
     </div>
   );

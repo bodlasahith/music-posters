@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HouseDoor, BorderAll, FileMusic, Stars, PersonCircle } from "react-bootstrap-icons";
+import { HouseDoor, BorderAll, FileMusic, Stars, Grid, PersonCircle, Compass } from "react-bootstrap-icons";
 
 function NavBar() {
   return (
@@ -23,10 +23,16 @@ function NavBar() {
           <p>Compilation Poster</p>
         </div>
       </Link>
-      <Link className="nav-link" to="/aiposter">
+      <Link className="nav-link" to="/taste-profile">
         <div className="nav-button">
-          <Stars />
-          <p>AI Poster</p>
+          <Compass />
+          <p>Taste Profile</p>
+        </div>
+      </Link>
+      <Link className="nav-link" to="/topster">
+        <div className="nav-button">
+          <Grid />
+          <p>Topster</p>
         </div>
       </Link>
       <Link className="nav-link" to="/profile">

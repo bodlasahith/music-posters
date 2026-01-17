@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
-import { BorderAll, FileMusic, Stars } from "react-bootstrap-icons";
+import { BorderAll, FileMusic, Stars, Grid } from "react-bootstrap-icons";
 import Player from "./Player";
 
 function Home() {
@@ -120,6 +120,10 @@ function Home() {
             <div className="description-item">
               <Stars className="description-icon" id="ai-icon" />
               <p>Design AI generated posters based on your music preferences</p>
+            </div>
+            <div className="description-item">
+              <Grid className="description-icon" id="topster-icon" />
+              <p>Visualize your top albums in a Topster</p>
             </div>
           </div>
         </div>
