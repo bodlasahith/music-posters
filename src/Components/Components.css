@@ -1672,6 +1672,7 @@ body {
 
 .taste-profile-header p {
   font-size: 1.1rem;
+  padding-bottom: 10px;
   color: #b3b3b3;
   margin: 0;
 }
@@ -1880,6 +1881,69 @@ body {
   font-weight: 500;
 }
 
+/* Top Lists */
+
+.top-lists-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.top-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top-list-title {
+  font-size: 0.9rem;
+  color: #191414;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #1DB954;
+}
+
+.top-list-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.top-list-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.item-rank {
+  font-weight: 700;
+  color: #1DB954;
+  min-width: 20px;
+  text-align: right;
+}
+
+.item-name {
+  color: #191414;
+  font-weight: 500;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex: 1;
+}
+
+.item-artist {
+  color: #666;
+  font-weight: 400;
+}
+
 .poster-footer {
   text-align: center;
   border-top: 1px solid #e0e0e0;
@@ -1974,6 +2038,11 @@ body {
 
   .dimensions-grid {
     gap: 15px;
+  }
+
+  .top-lists-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .profile-actions {

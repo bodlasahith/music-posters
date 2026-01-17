@@ -1,7 +1,7 @@
 import React from "react";
 import "./Components.css";
 
-function TasteProfilePoster({ profile, scores }) {
+function TasteProfilePoster({ profile, scores, topArtists, topTracks }) {
   if (!profile || !scores) return null;
 
   const getDimensionColor = (score) => {
@@ -89,6 +89,40 @@ function TasteProfilePoster({ profile, scores }) {
             <div className="dimension-percentage">{Math.round(scores.mood * 100)}%</div>
           </div>
         </div>
+
+        {/* Top Artists and Tracks */}
+        {topArtists && topArtists.length > 0 && (
+          <div className="top-lists-container">
+            <div className="top-list">
+              <h3 className="top-list-title">Top Artists (Last Month)</h3>
+              <ol className="top-list-items">
+                {topArtists.map((artist, index) => (
+                  <li key={artist.id} className="top-list-item">
+                    <span className="item-rank">{index + 1}</span>
+                    <span className="item-name">{artist.name}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {topTracks && topTracks.length > 0 && (
+              <div className="top-list">
+                <h3 className="top-list-title">Top Tracks (Last Month)</h3>
+                <ol className="top-list-items">
+                  {topTracks.map((track, index) => (
+                    <li key={track.id} className="top-list-item">
+                      <span className="item-rank">{index + 1}</span>
+                      <span className="item-name">
+                        {track.name}
+                        <span className="item-artist"> • {track.artists[0].name}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Footer */}
         <div className="poster-footer">

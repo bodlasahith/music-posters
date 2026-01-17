@@ -148,9 +148,15 @@ export const analyzeListeningProfile = async (token) => {
     const scores = calculateDimensionScores(allArtists, allTracks);
     const profile = generateProfile(scores);
 
+    // Get top 10 artists and tracks from last month (short_term)
+    const topArtists = (topArtistsShort.items || []).slice(0, 10);
+    const topTracks = (topTracksShort.items || []).slice(0, 10);
+
     return {
       profile,
       scores,
+      topArtists,
+      topTracks,
       artistCount: allArtists.length,
       trackCount: allTracks.length,
     };
@@ -234,10 +240,10 @@ const calculateEnergyScore = (artists, tracks) => {
   artists.forEach((artist) => {
     if (artist.genres && artist.genres.length > 0) {
       const hasEnergeticGenre = artist.genres.some((g) =>
-        energeticGenres.some((eg) => g.toLowerCase().includes(eg))
+        energeticGenres.some((eg) => g.toLowerCase().includes(eg)),
       );
       const hasMellowGenre = artist.genres.some((g) =>
-        mellowGenres.some((mg) => g.toLowerCase().includes(mg))
+        mellowGenres.some((mg) => g.toLowerCase().includes(mg)),
       );
 
       if (hasEnergeticGenre) energyIndicators += 0.8;
@@ -334,10 +340,10 @@ const calculateMoodScore = (artists, tracks) => {
   artists.forEach((artist) => {
     if (artist.genres && artist.genres.length > 0) {
       const hasUpliftingGenre = artist.genres.some((g) =>
-        upliftingGenres.some((ug) => g.toLowerCase().includes(ug))
+        upliftingGenres.some((ug) => g.toLowerCase().includes(ug)),
       );
       const hasIntrospectiveGenre = artist.genres.some((g) =>
-        introspectiveGenres.some((ig) => g.toLowerCase().includes(ig))
+        introspectiveGenres.some((ig) => g.toLowerCase().includes(ig)),
       );
 
       if (hasUpliftingGenre) moodIndicators += 0.8;

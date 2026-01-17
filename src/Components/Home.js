@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
-import { BorderAll, FileMusic, Stars, Grid } from "react-bootstrap-icons";
+import { BorderAll, FileMusic, Compass, Grid } from "react-bootstrap-icons";
 import Player from "./Player";
 
 function Home() {
@@ -118,8 +118,8 @@ function Home() {
               <p>Generate, download, and save compilations of your top artists or albums over time</p>
             </div>
             <div className="description-item">
-              <Stars className="description-icon" id="ai-icon" />
-              <p>Design AI generated posters based on your music preferences</p>
+              <Compass className="description-icon" id="ai-icon" />
+              <p>Find and share your music taste profile with others</p>
             </div>
             <div className="description-item">
               <Grid className="description-icon" id="topster-icon" />

@@ -11,6 +11,8 @@ function TasteProfile() {
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState(null);
   const [scores, setScores] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
   const [error, setError] = useState(null);
   const [showPoster, setShowPoster] = useState(false);
 
@@ -34,12 +36,14 @@ function TasteProfile() {
       const analysisResult = await analyzeListeningProfile(token);
       setProfile(analysisResult.profile);
       setScores(analysisResult.scores);
+      setTopArtists(analysisResult.topArtists);
+      setTopTracks(analysisResult.topTracks);
       setShowPoster(true);
     } catch (err) {
       console.error("Error analyzing profile:", err);
       setError(
         err.message ||
-          "Failed to analyze your taste profile. Make sure you have some listening history on Spotify!"
+          "Failed to analyze your taste profile. Make sure you have some listening history on Spotify!",
       );
     } finally {
       setLoading(false);
@@ -107,7 +111,12 @@ function TasteProfile() {
         </div>
       ) : (
         <div className="taste-profile-results">
-          <TasteProfilePoster profile={profile} scores={scores} />
+          <TasteProfilePoster
+            profile={profile}
+            scores={scores}
+            topArtists={topArtists}
+            topTracks={topTracks}
+          />
 
           <div className="profile-actions">
             <button onClick={downloadImage} className="action-btn">
@@ -121,6 +130,8 @@ function TasteProfile() {
                 setShowPoster(false);
                 setProfile(null);
                 setScores(null);
+                setTopArtists(null);
+                setTopTracks(null);
               }}
               className="action-btn secondary"
             >
