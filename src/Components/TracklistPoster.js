@@ -113,65 +113,7 @@ function TracklistPoster() {
     }
   };
 
-  useEffect(() => {
-    if (showPoster && !overflowAdjusted) {
-      adjustOverflow();
-      setOverflowAdjusted(true);
-    }
-  }, [showPoster, overflowAdjusted]);
-
-  useEffect(() => {
-    // Update text color for both columns when textColor changes
-    if (showPoster) {
-      const primaryOl = document.querySelector(".tracks");
-      const secondaryOl = document.getElementById("newOl");
-
-      if (primaryOl) {
-        primaryOl.style.color = textColor;
-      }
-      if (secondaryOl) {
-        secondaryOl.style.color = textColor;
-      }
-    }
-  }, [textColor, showPoster]);
-
-  const truncateText = (text, maxLength = 70) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
-  };
-
-  useEffect(() => {
-    if (showPoster && albumColors.length !== 0) {
-      const posterContent = document.querySelector(".poster-content");
-      const primaryColor = customizations.bgColor1
-        ? hexToRgb(customizations.bgColor1)
-        : albumColors[1];
-      const secondaryColor = customizations.bgColor2
-        ? hexToRgb(customizations.bgColor2)
-        : albumColors[2];
-
-      if (customizations.useSolidColor) {
-        posterContent.style.background = customizations.solidColor;
-      } else if (customizations.gradientType === "radial") {
-        posterContent.style.background = `radial-gradient(circle, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.5), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.5))`;
-      } else {
-        posterContent.style.background = `linear-gradient(${customizations.gradientDirection}, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.5), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.5))`;
-      }
-
-      if (!customizations.manualTextColor) {
-        const avgR = (primaryColor[0] + secondaryColor[0]) / 2;
-        const avgG = (primaryColor[1] + secondaryColor[1]) / 2;
-        const avgB = (primaryColor[2] + secondaryColor[2]) / 2;
-        const blendedR = avgR * 0.5 + 255 * 0.5;
-        const blendedG = avgG * 0.5 + 255 * 0.5;
-        const blendedB = avgB * 0.5 + 255 * 0.5;
-        const brightness = (blendedR * 299 + blendedG * 587 + blendedB * 114) / 1000;
-        setTextColor(brightness > 128 ? "#000000" : "#ffffff");
-      }
-    }
-  }, [showPoster, albumColors, customizations]);
-
-  const adjustOverflow = async () => {
+  const adjustOverflow = useCallback(async () => {
     let originalPosterContent = document.querySelector(".tracklist");
     let originalOl = originalPosterContent.querySelector("ol");
     let originalOlHeight = originalOl.clientHeight;
@@ -221,7 +163,65 @@ function TracklistPoster() {
         document.querySelector(".tracks").style.display = "none";
       }
     }
+  }, [textColor]);
+
+  useEffect(() => {
+    if (showPoster && !overflowAdjusted) {
+      adjustOverflow();
+      setOverflowAdjusted(true);
+    }
+  }, [showPoster, overflowAdjusted, adjustOverflow]);
+
+  useEffect(() => {
+    // Update text color for both columns when textColor changes
+    if (showPoster) {
+      const primaryOl = document.querySelector(".tracks");
+      const secondaryOl = document.getElementById("newOl");
+
+      if (primaryOl) {
+        primaryOl.style.color = textColor;
+      }
+      if (secondaryOl) {
+        secondaryOl.style.color = textColor;
+      }
+    }
+  }, [textColor, showPoster]);
+
+  const truncateText = (text, maxLength = 70) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
   };
+
+  useEffect(() => {
+    if (showPoster && albumColors.length !== 0) {
+      const posterContent = document.querySelector(".poster-content");
+      const primaryColor = customizations.bgColor1
+        ? hexToRgb(customizations.bgColor1)
+        : albumColors[1];
+      const secondaryColor = customizations.bgColor2
+        ? hexToRgb(customizations.bgColor2)
+        : albumColors[2];
+
+      if (customizations.useSolidColor) {
+        posterContent.style.background = customizations.solidColor;
+      } else if (customizations.gradientType === "radial") {
+        posterContent.style.background = `radial-gradient(circle, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.5), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.5))`;
+      } else {
+        posterContent.style.background = `linear-gradient(${customizations.gradientDirection}, rgba(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]}, 0.5), rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]}, 0.5))`;
+      }
+
+      if (!customizations.manualTextColor) {
+        const avgR = (primaryColor[0] + secondaryColor[0]) / 2;
+        const avgG = (primaryColor[1] + secondaryColor[1]) / 2;
+        const avgB = (primaryColor[2] + secondaryColor[2]) / 2;
+        const blendedR = avgR * 0.5 + 255 * 0.5;
+        const blendedG = avgG * 0.5 + 255 * 0.5;
+        const blendedB = avgB * 0.5 + 255 * 0.5;
+        const brightness = (blendedR * 299 + blendedG * 587 + blendedB * 114) / 1000;
+        setTextColor(brightness > 128 ? "#000000" : "#ffffff");
+      }
+    }
+  }, [showPoster, albumColors, customizations]);
 
   useEffect(() => {
     const handleKeyPress = (e) => {

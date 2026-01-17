@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
-import {
-  Search,
-  Download,
-  Plus,
-  X,
-  ArrowsAngleExpand,
-  ArrowsAngleContract,
-} from "react-bootstrap-icons";
+import { Search, Download, Plus, X } from "react-bootstrap-icons";
 import html2canvas from "html2canvas";
 
 function Topster() {

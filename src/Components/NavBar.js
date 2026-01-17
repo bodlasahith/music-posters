@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HouseDoor, BorderAll, FileMusic, Stars, Grid, PersonCircle, Compass } from "react-bootstrap-icons";
+import { HouseDoor, BorderAll, FileMusic, Grid, PersonCircle, Compass } from "react-bootstrap-icons";
 
 function NavBar() {
   return (
