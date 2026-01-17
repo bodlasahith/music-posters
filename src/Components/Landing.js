@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function App() {
-  // const REDIRECT_URI = "https://music-posters.vercel.app/callback";
-  const REDIRECT_URI = "http://127.0.0.1:3000/callback";
+  const REDIRECT_URI = "https://music-posters.vercel.app/callback";
+  // const REDIRECT_URI = "http://127.0.0.1:3000/callback";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
   const SPOTIFY_CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
