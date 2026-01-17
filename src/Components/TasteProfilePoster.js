@@ -12,7 +12,7 @@ function TasteProfilePoster({ profile, scores }) {
 
   return (
     <div id="taste-profile-poster" className="taste-profile-poster">
-      <div className="poster-content">
+      <div className="taste-profile-content">
         {/* Header */}
         <div className="poster-header">
           <div className="poster-emoji">{profile.emoji}</div>
