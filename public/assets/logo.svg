@@ -1,0 +1,40 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#1DB954" rx="20"/>
+  
+  <!-- Poster frame -->
+  <rect x="30" y="20" width="140" height="160" fill="none" stroke="white" stroke-width="3" rx="8"/>
+  
+  <!-- Inner frame accent -->
+  <rect x="38" y="28" width="124" height="144" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" rx="4"/>
+  
+  <!-- Musical notes (connected eighth notes) -->
+  <g transform="translate(60, 55)">
+    <!-- First note head (filled oval) -->
+    <ellipse cx="0" cy="35" rx="6" ry="7" fill="white" transform="rotate(-20 0 35)"/>
+    <!-- First note stem -->
+    <line x1="5.5" y1="35" x2="5.5" y2="5" stroke="white" stroke-width="2.5"/>
+    
+    <!-- Second note head (filled oval) -->
+    <ellipse cx="22" cy="28" rx="6" ry="7" fill="white" transform="rotate(-20 22 28)"/>
+    <!-- Second note stem -->
+    <line x1="27.5" y1="28" x2="27.5" y2="0" stroke="white" stroke-width="2.5"/>
+    
+    <!-- Beam connecting the eighth notes -->
+    <polygon points="5.5,5 27.5,0 27.5,4 5.5,9" fill="white"/>
+  </g>
+  
+  <!-- Music staff lines (subtle) -->
+  <g opacity="0.3" stroke="white" stroke-width="1">
+    <line x1="30" y1="110" x2="170" y2="110"/>
+    <line x1="30" y1="120" x2="170" y2="120"/>
+    <line x1="30" y1="130" x2="170" y2="130"/>
+  </g>
+  
+  <!-- Small decorative dots -->
+  <circle cx="55" cy="155" r="3" fill="white" opacity="0.8"/>
+  <circle cx="145" cy="155" r="3" fill="white" opacity="0.8"/>
+  
+  <!-- Center accent circle -->
+  <circle cx="100" cy="100" r="2.5" fill="white" opacity="0.6"/>
+</svg>

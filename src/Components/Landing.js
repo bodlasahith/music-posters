@@ -136,6 +136,7 @@ function App() {
     <div className="landing">
       <h1>Music Posters</h1>
       <button onClick={login}>Login to Spotify</button>
+      <button onClick={() => navigate("/tracklist-poster")}>Create Poster Without Login</button>
     </div>
   );
 }

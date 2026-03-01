@@ -38,11 +38,8 @@ function TracklistPoster() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    if (!storedToken) {
-      navigate("/");
-    }
     setToken(storedToken);
-  }, [navigate]);
+  }, []);
 
   const handleSearch = useCallback(async () => {
     if (!searchTerm) {
@@ -50,8 +47,15 @@ function TracklistPoster() {
       return;
     }
 
+    if (!token) {
+      alert("Please login to Spotify to search for albums.");
+      window.localStorage.removeItem("token");
+      navigate("/");
+      return;
+    }
+
     const endpoint = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-      searchTerm
+      searchTerm,
     )}&type=album&limit=10`;
 
     try {
@@ -75,6 +79,12 @@ function TracklistPoster() {
 
   const getTracks = async (albumId) => {
     if (showPoster) return;
+
+    if (!token) {
+      alert("Please login to Spotify to view album details.");
+      navigate("/");
+      return;
+    }
 
     const endpoint = `https://api.spotify.com/v1/albums/${albumId}`;
     try {
@@ -249,7 +259,7 @@ function TracklistPoster() {
           return new Promise((resolve) => {
             img.onload = resolve;
           });
-        })
+        }),
       );
     };
 
@@ -464,7 +474,7 @@ function TracklistPoster() {
                       style={{
                         color: getIconColor(
                           customizations.bgColor1 ||
-                            (albumColors[1] ? rgbToHex(...albumColors[1]) : "#000000")
+                            (albumColors[1] ? rgbToHex(...albumColors[1]) : "#000000"),
                         ),
                         fontSize: "20px",
                       }}
@@ -507,7 +517,7 @@ function TracklistPoster() {
                       style={{
                         color: getIconColor(
                           customizations.bgColor2 ||
-                            (albumColors[2] ? rgbToHex(...albumColors[2]) : "#ffffff")
+                            (albumColors[2] ? rgbToHex(...albumColors[2]) : "#ffffff"),
                         ),
                         fontSize: "20px",
                       }}

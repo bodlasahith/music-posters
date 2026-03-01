@@ -11,12 +11,19 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 const port = 3001;
 const uri = process.env.MONGODB_URI;
 
+if (!uri) {
+  console.error("ERROR: MONGODB_URI is not set in environment variables!");
+  process.exit(1);
+}
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
   },
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
 });
 
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -85,7 +92,7 @@ app.post("/api/add-poster", async (req, res) => {
       ...existingUser,
       posters: [...existingUser.posters, poster],
     };
-    
+
     await usersCollection.updateOne({ userId: userId }, { $set: updatedUser });
     res.status(201).send("Poster added successfully");
   } catch (error) {
@@ -135,7 +142,7 @@ app.get("/generate-image", (req, res) => {
     }
 
     console.log(`stdout: ${stdout}`);
-    const imagePath = path.join(require('os').homedir(), stdout.trim());
+    const imagePath = path.join(require("os").homedir(), stdout.trim());
     res.sendFile(imagePath);
   });
 });
