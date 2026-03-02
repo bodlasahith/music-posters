@@ -14,8 +14,9 @@ async function connectToDatabase() {
       strict: true,
       deprecationErrors: true,
     },
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 10000,
     socketTimeoutMS: 45000,
+    retryWrites: false,
   });
 
   await client.connect();
@@ -43,7 +44,9 @@ module.exports = async (req, res) => {
   // Check if MONGODB_URI is set
   if (!uri) {
     console.error("MONGODB_URI is not set!");
-    return res.status(500).json({ error: "Database configuration error", details: "MONGODB_URI not set" });
+    return res
+      .status(500)
+      .json({ error: "Database configuration error", details: "MONGODB_URI not set" });
   }
 
   console.log("Attempting to connect to MongoDB...");
@@ -51,7 +54,7 @@ module.exports = async (req, res) => {
   try {
     const client = await connectToDatabase();
     console.log("Connected to MongoDB successfully");
-    
+
     const database = client.db("Cluster0");
     const usersCollection = database.collection("users");
 
@@ -78,10 +81,10 @@ module.exports = async (req, res) => {
   } catch (error) {
     console.error("Error handling user profile:", error);
     console.error("Error stack:", error.stack);
-    return res.status(500).json({ 
-      error: "Internal Server Error", 
+    return res.status(500).json({
+      error: "Internal Server Error",
       details: error.message,
-      type: error.name 
+      type: error.name,
     });
   }
 };
