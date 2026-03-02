@@ -14,6 +14,8 @@ async function connectToDatabase() {
       strict: true,
       deprecationErrors: true,
     },
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
   });
 
   await client.connect();
@@ -38,16 +40,29 @@ module.exports = async (req, res) => {
 
   const { userId, email, username, account, image } = req.query;
 
+  // Check if MONGODB_URI is set
+  if (!uri) {
+    console.error("MONGODB_URI is not set!");
+    return res.status(500).json({ error: "Database configuration error", details: "MONGODB_URI not set" });
+  }
+
+  console.log("Attempting to connect to MongoDB...");
+
   try {
     const client = await connectToDatabase();
+    console.log("Connected to MongoDB successfully");
+    
     const database = client.db("Cluster0");
     const usersCollection = database.collection("users");
 
+    console.log(`Looking for user: ${userId}`);
     const existingUser = await usersCollection.findOne({ userId: userId });
 
     if (existingUser) {
+      console.log("User found");
       return res.status(200).json(existingUser);
     } else {
+      console.log("Creating new user");
       const newUser = {
         userId: userId,
         email: email,
@@ -62,6 +77,11 @@ module.exports = async (req, res) => {
     }
   } catch (error) {
     console.error("Error handling user profile:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error stack:", error.stack);
+    return res.status(500).json({ 
+      error: "Internal Server Error", 
+      details: error.message,
+      type: error.name 
+    });
   }
 };
