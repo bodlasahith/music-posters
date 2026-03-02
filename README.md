@@ -8,27 +8,118 @@ Whether you want to showcase your favorite album covers, highlight your top arti
 
 So why wait? Login with Spotify now and start creating your own personalized music posters!
 
+## Features
+
+### 🎨 **Topster Creator**
+
+Create custom grid-based album collages in various sizes (3x3, 4x4, 5x5, etc.). Search for any album on Spotify and drag them into your perfect arrangement. Add custom titles and download your topster as an image.
+
+### 📊 **Compilation Posters**
+
+Generate stunning posters of your top artists or albums with:
+
+- **Time Range Options**: Short-term (4 weeks), Medium-term (6 months), or Long-term (12 months)
+- **Multiple Poster Sizes**: Letter, Ledger, Medium (18x24"), Concert (24x36"), Movie (27x40")
+- **Customizable Layout**: Choose how many items to display
+- **Download Options**: Export as PNG image or PDF
+
+### 🎵 **Album Tracklist Posters**
+
+Transform any album into a beautiful tracklist poster with advanced customization:
+
+- Search any album from Spotify's catalog
+- **Color Extraction**: Automatically extract colors from album artwork
+- **Custom Styling**: Choose gradient backgrounds (linear/radial), solid colors, border styles, and fonts
+- **Manual Overrides**: Fine-tune colors, text, and layout to perfection
+- Dynamic sizing and overflow handling
+
+### 🧬 **Taste Profile Analyzer**
+
+Discover your unique music personality based on your listening habits:
+
+- AI-powered analysis of your Spotify listening history
+- Get categorized into music personality types (e.g., "Eclectic Explorer", "Genre Purist")
+- Visual breakdown of your music taste dimensions
+- Shareable personality posters
+
+### 👤 **Profile Dashboard**
+
+Comprehensive view of your Spotify statistics:
+
+- **Top Artists**: View your most-listened artists across all time ranges
+- **Top Tracks**: See your favorite songs from the past 4 weeks, 6 months, or all-time
+- **Top Genres**: Discover which genres dominate your listening
+- **Saved Posters**: Access and manage all your previously created posters
+- **Account Information**: View your Spotify profile details
+
+### 🏠 **Home Dashboard**
+
+- Scrolling carousel of your top artists
+- Visual grid of your top albums
+- Real-time currently playing track display
+- Quick navigation to all poster creation tools
+
+### 📥 **Export & Share**
+
+- Download posters as high-quality PNG images
+- Export as PDF for printing
+- Native share functionality for social media
+- Save posters to your profile for later access
+
+### 🎧 **Now Playing Widget**
+
+- See what you're currently listening to on Spotify
+- Dynamic background colors extracted from album art
+- Direct link to play on Spotify
+
+## Tech Stack
+
+### Frontend
+
+- **React** - UI framework with React Router for navigation
+- **HTML2Canvas** - Convert posters to downloadable images
+- **jsPDF** - Generate PDF exports
+- **ColorThief** - Extract dominant colors from album artwork
+- **Axios** - HTTP client for API requests
+- **React Bootstrap Icons** - UI icons
+
+### Backend
+
+- **Node.js** - Runtime environment
+- **Express** - Web server framework
+- **MongoDB** - Database for storing user data and saved posters
+- **CORS** - Cross-origin resource sharing
+
+### APIs & Authentication
+
+- **Spotify Web API** - Access user's music library and listening data
+- **OAuth 2.0** - Secure Spotify authentication
+
+### Deployment
+
+- **Vercel** - Hosting and serverless functions
+
 ## Setting up the Project
 
 To set up the project, follow these steps:
 
 1. Clone the repository to your local machine:
 
-  ```
-  git clone https://github.com/your-username/your-repo.git
-  ```
+```
+git clone https://github.com/your-username/your-repo.git
+```
 
 2. Navigate to the project directory:
 
-  ```
-  cd your-repo
-  ```
+```
+cd your-repo
+```
 
 3. Install the dependencies:
 
-  ```
-  npm install
-  ```
+```
+npm install
+```
 
 4. Store your Spotify Developer IDs and secrets in an `env.js` file
 
