@@ -137,6 +137,7 @@ function App() {
       <h1>Music Posters</h1>
       <button onClick={login}>Login to Spotify</button>
       <button onClick={() => navigate("/tracklist-poster")}>Create Poster Without Login</button>
+      <button onClick={() => navigate("/topster")}>Create Topster Without Login</button>
     </div>
   );
 }

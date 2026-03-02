@@ -18,11 +18,8 @@ function Topster() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    if (!storedToken) {
-      navigate("/");
-    }
     setToken(storedToken);
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     // Resize albums array when grid size changes
@@ -39,6 +36,12 @@ function Topster() {
   const searchAlbums = async (query) => {
     if (!query.trim()) {
       setSearchResults([]);
+      return;
+    }
+
+    if (!token) {
+      alert("Please login to Spotify to search for albums.");
+      navigate("/");
       return;
     }
 
