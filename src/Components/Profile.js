@@ -73,11 +73,14 @@ function Profile() {
   const deletePoster = async (index) => {
     const userId = window.localStorage.getItem("userId");
     const poster = userInfo.posters[index];
+    
+    // Handle both old format (string) and new format (object with id)
+    const posterId = typeof poster === 'object' && poster.id ? poster.id : index.toString();
 
     try {
       await axios.post(
         API_ENDPOINTS.DELETE_POSTER,
-        { userId: userId, posterId: poster.id },
+        { userId: userId, posterId: posterId },
         {
           headers: {
             "Content-Type": "application/json",
@@ -433,16 +436,21 @@ function Profile() {
         <h5>Right-click to delete (PERMANENT)</h5>
         {showInfo && userInfo.posters && userInfo.posters.length > 0 && (
           <div className="poster-container">
-            {userInfo.posters.map((poster, index) => (
-              <img
-                src={poster}
-                alt={`Poster ${index + 1}`}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  deletePoster(index);
-                }}
-              />
-            ))}
+            {userInfo.posters.map((poster, index) => {
+              // Handle both old format (string) and new format (object with data)
+              const posterSrc = typeof poster === 'object' && poster.data ? poster.data : poster;
+              return (
+                <img
+                  key={index}
+                  src={posterSrc}
+                  alt={`Poster ${index + 1}`}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    deletePoster(index);
+                  }}
+                />
+              );
+            })}
           </div>
         )}
         {showInfo && userInfo.posters && userInfo.posters.length === 0 && <p>No posters saved</p>}
