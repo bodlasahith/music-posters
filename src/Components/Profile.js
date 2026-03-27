@@ -73,9 +73,9 @@ function Profile() {
   const deletePoster = async (index) => {
     const userId = window.localStorage.getItem("userId");
     const poster = userInfo.posters[index];
-    
+
     // Handle both old format (string) and new format (object with id)
-    const posterId = typeof poster === 'object' && poster.id ? poster.id : index.toString();
+    const posterId = typeof poster === "object" && poster.id ? poster.id : index.toString();
 
     try {
       await axios.post(
@@ -85,7 +85,7 @@ function Profile() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       const updatedPosters = userInfo.posters.filter((_, i) => i !== index);
@@ -104,7 +104,7 @@ function Profile() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (responseShort.status === 401) {
@@ -126,7 +126,7 @@ function Profile() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const dataMedium = await responseMedium.json();
@@ -143,7 +143,7 @@ function Profile() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const dataLong = await responseLong.json();
@@ -166,7 +166,7 @@ function Profile() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (responseShort.status === 401) {
@@ -185,7 +185,7 @@ function Profile() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const dataMedium = await responseMedium.json();
@@ -199,7 +199,7 @@ function Profile() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const dataLong = await responseLong.json();
@@ -438,7 +438,7 @@ function Profile() {
           <div className="poster-container">
             {userInfo.posters.map((poster, index) => {
               // Handle both old format (string) and new format (object with data)
-              const posterSrc = typeof poster === 'object' && poster.data ? poster.data : poster;
+              const posterSrc = typeof poster === "object" && poster.data ? poster.data : poster;
               return (
                 <img
                   key={index}
